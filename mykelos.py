@@ -36,13 +36,5 @@ def getHostname():
 
 @app.route('/getInterfaces', methods=['GET'])
 def getInterfaces():
-
+    # Return the interface brief of the device
     return net_connect.send_command("show ip interface brief", use_textfsm=True)
-
-    # allInterfaces= []
-    # # Get all interfaces from device
-    # for i in net_connect.send_command("show ip interface brief", use_textfsm=True):
-    #     allInterfaces.append(i["intf"])
-    # # Return all interfaces
-    # return allInterfaces
-

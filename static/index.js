@@ -19,7 +19,7 @@ fetch('/getInterfaces', { method: 'GET' })
       if (!interfaces[i].intf.includes('lan')) {
         let btn = document.createElement("button");
         btn.innerText = interfaces[i].intf;
-        btn.onclick = function () {
+        btn.onclick = function () { 
           console.log(`${interfaces[i]}: Button is clicked`);
           display.innerText = `IP Address: ${interfaces[i].ipaddr}\nStatus: ${interfaces[i].status} `;
         };
