@@ -7,17 +7,31 @@ import sys
 
 cisco_881 = {
     'device_type': 'cisco_ios',
-    'host':   '172.168.0.1',
+    'host':   '192.168.0.1',
     'username': 'cisco',
     'password': 'password',
     "secret": 'password',
 }
 net_connect = ConnectHandler(**cisco_881)
 net_connect.enable()
+
 print("Connection established!\n")
 
-# app = Flask(__name__, template_folder='template', static_folder='static')
+# Get the hostname of the device
+# deviceHostname = net_connect.send_command("show running-config", use_textfsm=True).split('!')[2].split('hostname')[1].strip()
+# print(deviceHostname)
 
-# @app.route("/")
-# def sendStatic():
-#     return render_template('index.html')
+# Get the interfaces of the device
+# output = net_connect.send_command("show ip interface brief", use_textfsm=True)
+# allInterfaces = []
+# for i in output:
+#     allInterfaces.append(i["intf"])
+# print(allInterfaces)
+
+# Flask options below \/ ----------------------------------------------
+
+app = Flask(__name__, template_folder='template', static_folder='static')
+
+@app.route("/")
+def sendStatic():
+    return render_template('index.html')
