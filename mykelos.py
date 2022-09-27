@@ -40,8 +40,28 @@ def sendStatic():
 def getHostname():
     passedData = json.loads(request.data.decode("utf-8"))
     # Return the hostname of the device
-    # return net_connect.send_command("show running-config", use_textfsm=True).split('!')[2].split('hostname')[1].strip()
     return sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show running-config").split('!')[2].split('hostname')[1].strip()
+
+@app.route('/getDeviceInfo', methods=['POST'])
+def getDeviceInfo():
+    passedData = json.loads(request.data.decode("utf-8"))
+    # Return the hostname of the device
+    showRunning = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show running-config")
+    gatewayReturn = showRunning.split('ip default-gateway ')[1].split(' ')[0]
+    vlanReturn = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show vlan brief")
+    for i in vlanReturn:
+        if i['name'] == 'default':
+            vlanReturn = i['vlan_id']
+    dnsReturn = showRunning.split('ip domain-name ')[1].split('!')[0]
+    firmwareReturn = showRunning.split('version ')[1].split('no')[0]
+    intSumReturn = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show ip interface brief")
+    intSumParsedReturn = ''
+    for i in intSumReturn:
+        if i['status'] == 'up' and 'lan' not in i['intf']:
+            intSumParsedReturn += '1'
+        elif i['status'] == 'down':
+            intSumParsedReturn += '0'
+    return gatewayReturn + "*" + vlanReturn + "*" + dnsReturn + "*" + firmwareReturn + "*" + intSumParsedReturn
 
 @app.route('/getInterfaces', methods=['GET'])
 def getInterfaces():
