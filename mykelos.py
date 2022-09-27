@@ -56,12 +56,16 @@ def getDeviceInfo():
     firmwareReturn = showRunning.split('version ')[1].split('no')[0]
     intSumReturn = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show ip interface brief")
     intSumParsedReturn = ''
+    numOfGig = 0
     for i in intSumReturn:
         if i['status'] == 'up' and 'lan' not in i['intf']:
             intSumParsedReturn += '1'
-        elif i['status'] == 'down':
+        elif i['status'] == 'down' and 'lan' not in i['intf']:
             intSumParsedReturn += '0'
-    return gatewayReturn + "*" + vlanReturn + "*" + dnsReturn + "*" + firmwareReturn + "*" + intSumParsedReturn
+    for i in intSumReturn:
+        if 'abit' in i['intf']:
+            numOfGig += 1
+    return gatewayReturn + "*" + vlanReturn + "*" + dnsReturn + "*" + firmwareReturn + "*" + intSumParsedReturn + "*" + str(numOfGig)
 
 @app.route('/getInterfaces', methods=['GET'])
 def getInterfaces():

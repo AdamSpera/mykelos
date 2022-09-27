@@ -42,7 +42,7 @@ function getDeviceInfo() {
   fetch('/getDeviceInfo', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value }) })
     .then(response => response.text())
     .then(text => {
-      // Gateway, VLAN, DNS, Firmware, IntSummary
+      // Gateway, VLAN, DNS, Firmware, IntSummary, NumOfGig
       text = text.split('*');
       deviceInfo.ipAddress.innerHTML = `<b>IP ADDRESS</b><br>${hostField.value}`
       deviceInfo.gateway.innerHTML = `<b>GATEWAY</b><br>${text[0].slice(0, -2)}`
