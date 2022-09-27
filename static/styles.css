@@ -89,6 +89,11 @@ h3 {
   font-weight: 600;
 }
 
+span {
+  padding: 0;
+  margin: 0;
+}
+
 button {
   border-radius: 3px;
 
@@ -207,3 +212,56 @@ button {
   margin-right: 20px;
 }
 
+.clientTable {
+  margin-top: 25px;
+  margin-left: 15px;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+
+  width: 95%;
+
+  font-size: 16.5px;
+  border: 1px solid #eeeeee;
+  border-radius: 2px;
+}
+
+/* Header row tr */
+.clientTable>tbody>tr:first-of-type {
+  background-color: rgb(250, 250, 250);
+  border-bottom: 1px solid #eeeeee;
+}
+
+/* Header row spans */
+.clientTable>tbody>tr>th>span {
+  text-align: center;
+  font-size: 13.5px;
+  /* background-color: aquamarine; */
+}
+
+/* Header row first span */
+.clientTable>tbody>tr>th:first-of-type {
+  text-align: center;
+  /* background-color: aquamarine; */
+}
+
+/* First column th */
+.clientTable>tbody>tr>:first-of-type {
+  text-align: center;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  /* background-color: #003f88; */
+}
+
+/* Columns after head */
+.clientTable>tbody>tr {
+  font-size: 13.5px;
+  /* background-color: #003f88; */
+}
+
+/* Last column after head */
+.clientTable>tbody>tr:last-of-type {
+  border-bottom: 2px solid #eeeeee;
+  /* background-color: #003f88; */
+}
