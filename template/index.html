@@ -28,7 +28,7 @@
     <div class="col-3 leftBar" style="padding-left: 20px;">
 
       <!-- User -->
-      <h3 id="user" style="padding-top: 15px; padding-bottom: 15px;">R0mm3l - No User</h3>
+      <h3 id="user" style="padding-top: 15px; padding-bottom: 15px;">No User</h3>
 
       <p class="fieldLabel" style="letter-spacing: 2px;">IP ADDRESS</p>
       <input id="hostField" type="text" placeholder="" class="inputField">
@@ -63,10 +63,11 @@
 
         <!-- Flex left box -->
         <div>
+          <!-- Switch graphic -->
           <div class="switch-border">
             <table class="port-table">
-              <tr style="cursor: default;">
-                <th style="margin-right: 10px;"><span>1</span></th>
+              <tr id="numberRow" style="cursor: default; margin-right: 10px;">
+                <!-- <th><span>1</span></th>
                 <th><span>2</span></th>
                 <th><span>3</span></th>
                 <th><span>4</span></th>
@@ -76,10 +77,10 @@
                 <th><span>8</span></th>
                 <th><span>&nbsp;</span></th>
                 <th><span>9</span></th>
-                <th><span>10</span></th>
+                <th><span>10</span></th> -->
               </tr>
-              <tr>
-                <td><img id="port0" src="/static/assets/off-port.png" alt="port"></td>
+              <tr id="portRow">
+                <!-- <td><img id="port0" src="/static/assets/off-port.png" alt="port"></td>
                 <td><img id="port1" src="/static/assets/off-port.png" alt="port"></td>
                 <td><img id="port2" src="/static/assets/off-port.png" alt="port"></td>
                 <td><img id="port3" src="/static/assets/off-port.png" alt="port"></td>
@@ -89,7 +90,7 @@
                 <td><img id="port7" src="/static/assets/off-port.png" alt="port"></td>
                 <td style="border: none !important; cursor: default;"><img src="" alt=""></td>
                 <td><img id="port8" src="/static/assets/off-sfp.png" alt="port"></td>
-                <td><img id="port9" src="/static/assets/off-sfp.png" alt="port"></td>
+                <td><img id="port9" src="/static/assets/off-sfp.png" alt="port"></td> -->
               </tr>
             </table>
           </div>
@@ -119,10 +120,51 @@
           </table>
         </div>
 
+        <!-- Left column div close -->
       </div>
 
       <!-- Divide line -->
       <div class="divider">.</div>
+
+      <!-- Client List -->
+      <table class="clientChart">
+
+        <!-- Header Row -->
+        <tr>
+          <th class="checkBox">
+            <input type="checkbox">
+          </th>
+          <th>
+            <p>#</p>
+          </th>
+          <th>
+            <p>Description</p>
+          </th>
+          <th>
+            <p>Usage</p>
+          </th>
+          <th>
+            <p>MAC Address</p>
+          </th>
+          <th>
+            <p>IPv4 address</p>
+          </th>
+          <th>
+            <p>VLAN</p>
+          </th>
+          <th>
+            <p>Port</p>
+          </th>
+        </tr>
+
+        <!-- List all clients -->
+        <tr>
+          <td>
+            
+          </td>
+        </tr>
+
+      </table>
 
     </div>
 

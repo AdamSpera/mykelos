@@ -56,16 +56,18 @@ def getDeviceInfo():
     firmwareReturn = showRunning.split('version ')[1].split('no')[0]
     intSumReturn = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show ip interface brief")
     intSumParsedReturn = ''
-    numOfGig = 0
+    gigabitPorts = ''
     for i in intSumReturn:
-        if i['status'] == 'up' and 'lan' not in i['intf']:
+        if i['status'] == 'up' and 'lan' not in i['intf'] and 'abit' not in i['intf']:
             intSumParsedReturn += '1'
-        elif i['status'] == 'down' and 'lan' not in i['intf']:
+        elif i['status'] == 'down' and 'lan' not in i['intf'] and 'abit' not in i['intf']:
             intSumParsedReturn += '0'
     for i in intSumReturn:
-        if 'abit' in i['intf']:
-            numOfGig += 1
-    return gatewayReturn + "*" + vlanReturn + "*" + dnsReturn + "*" + firmwareReturn + "*" + intSumParsedReturn + "*" + str(numOfGig)
+        if 'abit' in i['intf'] and i['status'] == 'up':
+            gigabitPorts += '1'
+        elif 'abit' in i['intf'] and i['status'] == 'down':
+            gigabitPorts += '0'
+    return gatewayReturn + "*" + vlanReturn + "*" + dnsReturn + "*" + firmwareReturn + "*" + intSumParsedReturn + "*" + gigabitPorts
 
 @app.route('/getInterfaces', methods=['GET'])
 def getInterfaces():
