@@ -36,20 +36,22 @@ def sendStatic():
     # Return the index.html file
     return render_template('index.html')
 
-
-
-
 @app.route('/getClients', methods=['POST'])
 def getClients():
     passedData = json.loads(request.data.decode("utf-8"))
-    # Return the hostname of the device
-    return sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show cdp neighbors detail")
+    
+    clientFullList = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show cdp neighbors detail")
 
+    sendBack = ''
+    for i in clientFullList:
+        stringToPush = ''
+        stringToPush += i['destination_host'] + '*AS*' + i['local_port'] + '*AS*' + i['management_ip'] + '*AS*' + i['platform'] + '*AS*' + i['capabilities'] + '*BR*'
+        sendBack += stringToPush
 
-
-
-
-
+    if (sendBack.endswith('*BR*')):
+        sendBack = sendBack[:-4]
+    
+    return sendBack
 
 @app.route('/getHostname', methods=['POST'])
 def getHostname():

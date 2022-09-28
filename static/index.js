@@ -19,12 +19,19 @@ var deviceInfo = {
 
 var numberRow = document.getElementById('numberRow');
 var portRow = document.getElementById('portRow');
+var clientTable = document.getElementById('clientTable')
 
 function getClients() {
   fetch('/getClients', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value }) })
     .then(response => response.text())
     .then(text => {
-      console.log(text);
+      var clients = text.split('*BR*');
+      for (let i = 0; i < clients.length; i++) {
+        var client = clients[i].split('*AS*');
+        var tableRow = document.createElement("tr");
+        tableRow.innerHTML = `<td><span>${(i + 1)}</span></td><td>${client[0]}</span></td><td><span>${client[2]}</span></td><td><span>${client[1]}</span></td><td><span>${client[4]}</span></td><td><span>${client[3]}</span></td>`;
+        clientTable.appendChild(tableRow);
+      }
     })
 }
 
