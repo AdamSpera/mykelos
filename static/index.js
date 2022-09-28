@@ -31,21 +31,44 @@ var portNameInput = document.getElementById('portNameInput'); // Device Name / P
 var enablePortButton = document.getElementById('enablePortButton'); //enable port status
 var disablePortButton = document.getElementById('disablePortButton'); //enable port status
 
-var portAccessButton = document.getElementsByClassName('portAccessButton'); // access
-var portTrunkButton = document.getElementsByClassName('portTrunkButton'); // trunk
+var portAccessButton = document.getElementById('portAccessButton'); // access
+var portTrunkButton = document.getElementById('portTrunkButton'); // trunk
 
-var portVLAN1display = document.getElementById('portVLAN1display'); //[access: VLAN, trunk: Native VLAN]
+var portVLAN1Display = document.getElementById('portVLAN1display'); //[access: VLAN, trunk: Native VLAN]
 var portVLAN1Input = document.getElementById('portVLAN1Input'); //input text
 var portVLAN2Display = document.getElementById('portVLAN2Display'); //[access: Voice VLAN, trunk: Allowed VLANs]
-var portVLAN2Display = document.getElementById('portVLAN2Input'); //input text
+var portVLAN2Input = document.getElementById('portVLAN2Input'); //input text
 
-var portRSTPEnableButton = document.getElementsByClassName('portRSTPEnableButton'); //enable button
-var portRSTPDisableButton = document.getElementsByClassName('portRSTPDisableButton'); //disable button
+var portRSTPEnableButton = document.getElementById('portRSTPEnableButton'); //enable button
+var portRSTPDisableButton = document.getElementById('portRSTPDisableButton'); //disable button
 
 var portSTPGuardSelect = document.getElementById('portSTPGuardSelect'); // BPDU Guard | Root Guard | Loop Guard | Disabled
 
 var portSettingsUpdateButton = document.getElementById('portSettingsUpdateButton'); //update button
 // End Settings Fields
+
+function toggleButtonStyles(clickedButton, otherButton) {
+  clickedButton.classList.remove('portSettingsButtonInactive');
+  clickedButton.classList.add('portSettingsButtonActive');
+  otherButton.classList.remove('portSettingsButtonActive');
+  otherButton.classList.add('portSettingsButtonInactive');
+}
+
+enablePortButton.addEventListener('click', function () { toggleButtonStyles(enablePortButton, disablePortButton); });
+disablePortButton.addEventListener('click', function () { toggleButtonStyles(disablePortButton, enablePortButton); });
+portRSTPEnableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPEnableButton, portRSTPDisableButton); });
+portRSTPDisableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPDisableButton, portRSTPEnableButton); });
+portAccessButton.addEventListener('click', function () {
+  toggleButtonStyles(portAccessButton, portTrunkButton);
+  portVLAN1Display.innerText = 'VLAN';
+  portVLAN2Display.innerText = 'Voice VLAN';
+});
+portTrunkButton.addEventListener('click', function () {
+  toggleButtonStyles(portTrunkButton, portAccessButton);
+  portVLAN1Display.innerText = 'Native VLAN';
+  portVLAN2Display.innerText = 'Allowed VLANs';
+});
+
 
 function returnMainView() {
   mainView.style.display = 'block';
@@ -98,7 +121,7 @@ function getDeviceInfo() {
       deviceInfo.dns.innerHTML = `<b>DNS</b><br>${text[2]}`
       deviceInfo.firmware.innerHTML = `<b>FIRMWARE</b><br>Version ${text[3]}`
       loadingAnimation.style.display = 'none';
-      
+
       fastEthernetPorts = [];
       for (var i = 0; i < text[4].length; i++) {
         fastEthernetPorts.push(text[4].charAt(i));

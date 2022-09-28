@@ -234,6 +234,7 @@ button {
 .clientTable>tbody>tr:first-of-type {
   background-color: rgb(250, 250, 250);
   border-bottom: 1px solid #eeeeee;
+  border-right: 2px solid #eeeeee;
 }
 
 /* Header row spans */
@@ -282,7 +283,6 @@ button {
 }
 
 .portSettings span {
-  margin-right: 125px;
   font-weight: 100;
   font-size: 14px;
   letter-spacing: 1px;
@@ -319,6 +319,9 @@ button {
   color: #898a8c;
   letter-spacing: 0.5px;
 }
+.portSettingsButtonInactive:hover {
+  background-color: #f3f3f3;
+}
 
 .portSettingsButtonActive {
   margin: 0;
@@ -329,6 +332,9 @@ button {
   box-shadow: none;
   color: #2d7ae8;
   letter-spacing: 0.5px;
+}
+.portSettingsButtonActive:hover {
+  background-color: #d9e8ff;
 }
 
 .leftButton {
