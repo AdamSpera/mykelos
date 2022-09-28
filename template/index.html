@@ -57,7 +57,17 @@
 
     <!-- Right column -->
     <div class="col-9 rightBar">
-      <h2 id="hostname" style="padding-top: 15px; padding-bottom: 15px;">Device Hostname</h2>
+      <table>
+        <tr>
+          <th>
+            <h2 id="hostname" style="padding-top: 15px; padding-bottom: 15px;">Device Hostname</h2>
+          </th>
+          <th>
+            <a href="#" onclick="returnMainView()" id="returnLink" style="display: none; padding-left: 20px;">Return to
+              port list</a>
+          </th>
+        </tr>
+      </table>
 
       <div style="display: flex; flex-wrap: wrap;">
 
@@ -67,7 +77,7 @@
           <div class="switch-border">
             <table class="port-table">
               <tr id="numberRow" style="cursor: default; margin-right: 10px;">
-                <!-- <th><span>1</span></th>
+                <th><span>1</span></th>
                 <th><span>2</span></th>
                 <th><span>3</span></th>
                 <th><span>4</span></th>
@@ -77,20 +87,20 @@
                 <th><span>8</span></th>
                 <th><span>&nbsp;</span></th>
                 <th><span>9</span></th>
-                <th><span>10</span></th> -->
+                <th><span>10</span></th>
               </tr>
               <tr id="portRow">
-                <!-- <td><img id="port0" src="/static/assets/off-port.png" alt="port"></td>
-                <td><img id="port1" src="/static/assets/off-port.png" alt="port"></td>
-                <td><img id="port2" src="/static/assets/off-port.png" alt="port"></td>
-                <td><img id="port3" src="/static/assets/off-port.png" alt="port"></td>
-                <td><img id="port4" src="/static/assets/off-port.png" alt="port"></td>
-                <td><img id="port5" src="/static/assets/off-port.png" alt="port"></td>
-                <td><img id="port6" src="/static/assets/off-port.png" alt="port"></td>
-                <td><img id="port7" src="/static/assets/off-port.png" alt="port"></td>
+                <td><img id="port0" src="/static/assets/off-port.png" alt="port" onclick="focusPort(1)"></td>
+                <td><img id="port1" src="/static/assets/off-port.png" alt="port" onclick="focusPort(2)"></td>
+                <td><img id="port2" src="/static/assets/off-port.png" alt="port" onclick="focusPort(3)"></td>
+                <td><img id="port3" src="/static/assets/off-port.png" alt="port" onclick="focusPort(4)"></td>
+                <td><img id="port4" src="/static/assets/off-port.png" alt="port" onclick="focusPort(5)"></td>
+                <td><img id="port5" src="/static/assets/off-port.png" alt="port" onclick="focusPort(6)"></td>
+                <td><img id="port6" src="/static/assets/off-port.png" alt="port" onclick="focusPort(7)"></td>
+                <td><img id="port7" src="/static/assets/off-port.png" alt="port" onclick="focusPort(8)"></td>
                 <td style="border: none !important; cursor: default;"><img src="" alt=""></td>
-                <td><img id="port8" src="/static/assets/off-sfp.png" alt="port"></td>
-                <td><img id="port9" src="/static/assets/off-sfp.png" alt="port"></td> -->
+                <td><img id="port8" src="/static/assets/off-sfp.png" alt="port" onclick="focusPort(9)"></td>
+                <td><img id="port9" src="/static/assets/off-sfp.png" alt="port" onclick="focusPort(10)"></td>
               </tr>
             </table>
           </div>
@@ -126,55 +136,193 @@
       <!-- Divide line -->
       <div class="divider">.</div>
 
-      <!-- Client List -->
-      <table class="clientTable">
+      <!-- Main switch view -->
+      <div id="mainView">
 
-        <tbody id="clientTable">
+        <!-- Client List -->
+        <table class="clientTable">
 
-          <!-- Header Row -->
-          <tr>
-            <th>
-              <span>#</span>
-            </th>
-            <th>
-              <span>Description</span>
-            </th>
-            <th>
-              <span>IPv4 address</span>
-            </th>
-            <th>
-              <span>Local Port</span>
-            </th>
-            <th>
-              <span>Capability</span>
-            </th>
-            <th>
-              <span>Platform</span>
-            </th>
-          </tr>
+          <tbody id="clientTable">
 
-          <!-- List all clients -->
-          <!-- <tr>
-            <td>
-              <span>1</span>
-            </td>
-            <td>
-              <span>ASXPS-Computer</span>
-            </td>
-            <td>
-              <span>560 KB</span>
-            </td>
-            <td>
-              <span>00:9c:02:01:cf:47</span>
-            </td>
-            <td>
-              <span>172.25.8.105</span>
-            </td>
-          </tr> -->
+            <!-- Header Row -->
+            <tr>
+              <th>
+                <span>#</span>
+              </th>
+              <th>
+                <span>Description</span>
+              </th>
+              <th>
+                <span>IPv4 address</span>
+              </th>
+              <th>
+                <span>Local Port</span>
+              </th>
+              <th>
+                <span>Capability</span>
+              </th>
+              <th>
+                <span>Platform</span>
+              </th>
+            </tr>
 
-        </tbody>
+            <!-- List all clients -->
+            <!-- <tr>
+              <td>
+                <span>1</span>
+              </td>
+              <td>
+                <span>ASXPS-Computer</span>
+              </td>
+              <td>
+                <span>560 KB</span>
+              </td>
+              <td>
+                <span>00:9c:02:01:cf:47</span>
+              </td>
+              <td>
+                <span>172.25.8.105</span>
+              </td>
+            </tr> -->
 
-      </table>
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <!-- Focus port view -->
+      <div id="focusView" style="display: none;" class="focusView">
+
+        <!-- Port settings -->
+        <table class="portSettings">
+          <tbody>
+            <tr>
+              <th>
+                <span>Switch / Port</span>
+              </th>
+              <th>
+                <!-- text -->
+                <span id="switchPortDisplay">Boyer-214-Podium / 1</span>
+              </th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <span>Name</span>
+              </th>
+              <th>
+                <!-- input text -->
+                <input id="portNameInput" type="text">
+              </th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <span>Port Status</span>
+              </th>
+              <th>
+                <!-- toggle buttons -->
+                <table>
+                  <tbody>
+                    <tr>
+                      <button id="enablePortButton" style="width: 140px;" class="portSettingsButtonInactive leftButton">Enabled</button>
+                      <button id="disablePortButton" style="width: 140px;" class="portSettingsButtonActive rightButton">Disabled</button>
+                    </tr>
+                  </tbody>
+                </table>
+              </th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <span>Port Type</span>
+              </th>
+              <th>
+                <!-- toggle buttons -->
+                <table>
+                  <tbody>
+                    <tr>
+                      <button id="portAccessButton" style="width: 120px;" class="portSettingsButtonInactive leftButton">Access</button>
+                      <button id="portTrunkButton" style="width: 120px;" class="portSettingsButtonInactive rightButton">Trunk</button>
+                    </tr>
+                  </tbody>
+                </table>
+              </th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <span id="portVLAN1display">[access: VLAN, trunk: Native VLAN]</span>
+              </th>
+              <th>
+                <!-- input text -->
+                <input id="portVLAN1Input" type="text">
+              </th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <span id="portVLAN2Display">[access: Voice VLAN, trunk: Allowed VLANs]</span>
+              </th>
+              <th>
+                <!-- input text -->
+                <input id="portVLAN2Input" type="text">
+              </th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <span>RSTP</span>
+              </th>
+              <th>
+                <!-- toggle buttons -->
+                <table>
+                  <tbody>
+                    <tr>
+                      <button id="portRSTPEnableButton" style="width: 140px;" class="portSettingsButtonInactive leftButton">Enabled</button>
+                      <button id="portRSTPDisableButton" style="width: 140px;" class="portSettingsButtonInactive rightButton">Disabled</button>
+                    </tr>
+                  </tbody>
+                </table>
+              </th>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+            <tr>
+              <th>
+                <span>STP Guard</span>
+              </th>
+              <th>
+                <!-- drop down select -->
+                <select id="portSTPGuardSelect">
+                  <option value="BPDU Guard">BPDU Guard</option>
+                  <option value="Root Guard">Root Guard</option>
+                  <option value="Loop Guard">Loop Guard</option>
+                  <option value="Disabled">Disabled</option>
+                </select>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Submit button -->
+        <button id="portSettingsUpdateButton" class="submitButton">Update</button>
+
+      </div>
 
     </div>
 

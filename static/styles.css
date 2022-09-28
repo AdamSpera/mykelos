@@ -71,6 +71,11 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+a {
+  color: #00509d;
+  font-size: 13px;
+}
+
 h1 {
   font-size: 30px;
   font-weight: 900;
@@ -161,7 +166,7 @@ button {
 
 .port-table span {
   width: 20;
-  height: 20; 
+  height: 20;
 
   font-size: 11px;
   font-weight: 600;
@@ -172,10 +177,10 @@ button {
 
 .port-table th {
   width: 20;
-  height: 20; 
+  height: 20;
 
   position: relative;
-	bottom: -3px;
+  bottom: -3px;
 
   text-align: center;
 }
@@ -214,7 +219,7 @@ button {
 
 .clientTable {
   margin-top: 25px;
-  margin-left: 15px;
+  margin-left: 20px;
   padding-bottom: 15px;
   margin-bottom: 15px;
 
@@ -264,4 +269,83 @@ button {
 .clientTable>tbody>tr:last-of-type {
   border-bottom: 2px solid #eeeeee;
   /* background-color: #003f88; */
+}
+
+.focusView {
+  margin-top: 15px;
+  padding-left: 25px;
+}
+
+.portSettings {
+  margin-top: 10px;
+  padding-left: 25px;
+}
+
+.portSettings span {
+  margin-right: 125px;
+  font-weight: 100;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.portSettings td {
+  padding-bottom: 10px;
+}
+
+.portSettings tr {
+  padding-bottom: 25px;
+}
+
+.portSettings input {
+  width: 360px;
+  padding-left: 5px;
+  color: #002d61;
+  letter-spacing: 1px;
+}
+
+.portSettings select {
+  width: 360px;
+  height: 28px;
+  color: #002d61;
+  letter-spacing: 1px;
+}
+
+.portSettingsButtonInactive {
+  margin: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  background-color: #fff;
+  border-color: #bdbebf;
+  color: #898a8c;
+  letter-spacing: 0.5px;
+}
+
+.portSettingsButtonActive {
+  margin: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  background-color: #eaf2ff;
+  border-color: #2d7ae8;
+  box-shadow: none;
+  color: #2d7ae8;
+  letter-spacing: 0.5px;
+}
+
+.leftButton {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.rightButton {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.submitButton {
+  letter-spacing: 1px;
+  width: 100px;
+  margin-top: 20px;
+  background-color: #1470cc;
+  border-color: #1470cc;
+  color: #fff;
 }

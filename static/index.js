@@ -8,6 +8,9 @@ var connectionText = document.getElementById('connectionText');
 var loadingAnimation = document.getElementById('loadingAnimation');
 
 var hostname = document.getElementById('hostname');
+var mainView = document.getElementById('mainView');
+var focusView = document.getElementById('focusView');
+var returnLink = document.getElementById('returnLink');
 
 var deviceInfo = {
   'ipAddress': document.getElementById('ipAddress'),
@@ -19,7 +22,46 @@ var deviceInfo = {
 
 var numberRow = document.getElementById('numberRow');
 var portRow = document.getElementById('portRow');
-var clientTable = document.getElementById('clientTable')
+var clientTable = document.getElementById('clientTable');
+
+// Port Settings Fields
+var switchPortDisplay = document.getElementById('switchPortDisplay'); //Boyer-214-Podium / 1
+var portNameInput = document.getElementById('portNameInput'); // Device Name / Port#
+
+var enablePortButton = document.getElementById('enablePortButton'); //enable port status
+var disablePortButton = document.getElementById('disablePortButton'); //enable port status
+
+var portAccessButton = document.getElementsByClassName('portAccessButton'); // access
+var portTrunkButton = document.getElementsByClassName('portTrunkButton'); // trunk
+
+var portVLAN1display = document.getElementById('portVLAN1display'); //[access: VLAN, trunk: Native VLAN]
+var portVLAN1Input = document.getElementById('portVLAN1Input'); //input text
+var portVLAN2Display = document.getElementById('portVLAN2Display'); //[access: Voice VLAN, trunk: Allowed VLANs]
+var portVLAN2Display = document.getElementById('portVLAN2Input'); //input text
+
+var portRSTPEnableButton = document.getElementsByClassName('portRSTPEnableButton'); //enable button
+var portRSTPDisableButton = document.getElementsByClassName('portRSTPDisableButton'); //disable button
+
+var portSTPGuardSelect = document.getElementById('portSTPGuardSelect'); // BPDU Guard | Root Guard | Loop Guard | Disabled
+
+var portSettingsUpdateButton = document.getElementById('portSettingsUpdateButton'); //update button
+// End Settings Fields
+
+function returnMainView() {
+  mainView.style.display = 'block';
+  focusView.style.display = 'none';
+  returnLink.style.display = 'none';
+}
+
+function focusPort(port) {
+  console.log(port)
+  mainView.style.display = 'none';
+  focusView.style.display = 'block';
+  returnLink.style.display = 'block';
+
+  // Get Port Settings
+
+}
 
 function getClients() {
   fetch('/getClients', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value }) })
@@ -67,7 +109,7 @@ function getDeviceInfo() {
         tableHeader.innerHTML = `<span>${(i + 1)}</span>`;
         numberRow.appendChild(tableHeader);
         var tableData = document.createElement("td");
-        tableData.innerHTML = `<img id="port${i}" src="/static/assets/${(fastEthernetPorts[i] == '1') ? 'active' : 'off'}-port.png" alt="port">`;
+        tableData.innerHTML = `<img id="port${i}" src="/static/assets/${(fastEthernetPorts[i] == '1') ? 'active' : 'off'}-port.png" alt="port" onclick="focusPort(${(i + 1)})">`;
         portRow.appendChild(tableData);
       }
 
@@ -91,7 +133,7 @@ function getDeviceInfo() {
         tableHeader.innerHTML = `<span>${(fastEthernetPorts.length + (i + 1))}</span>`;
         numberRow.appendChild(tableHeader);
         var tableData = document.createElement("td");
-        tableData.innerHTML = `<img id="port${(fastEthernetPorts.length + (i + 1))}" src="/static/assets/${(gigabitEthernetPorts[i] == '1') ? 'active' : 'off'}-sfp.png" alt="port">`;
+        tableData.innerHTML = `<img id="port${(fastEthernetPorts.length + (i + 1))}" src="/static/assets/${(gigabitEthernetPorts[i] == '1') ? 'active' : 'off'}-sfp.png" alt="port" onclick="focusPort(${fastEthernetPorts.length + (i + 1)})">`;
         portRow.appendChild(tableData);
       }
 
