@@ -36,6 +36,37 @@ def sendStatic():
     # Return the index.html file
     return render_template('index.html')
 
+
+
+
+
+@app.route('/getPortSetting', methods=['POST'])
+def getPortSetting():
+    passedData = json.loads(request.data.decode("utf-8"))
+    # Return the show interfaces from device
+    portSettingsRaw = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show interfaces")
+    
+    portSettings = []
+    for port in portSettingsRaw:
+        if 'lan' not in port['interface']:
+            portSettings.append(
+                {
+                    'interface': port['interface'],
+                    'description': port['description'],
+                    'link_status': port['link_status'],
+                    'media_type': port['media_type']
+                }
+            )
+
+    return portSettings
+
+
+
+
+
+
+
+
 @app.route('/getClients', methods=['POST'])
 def getClients():
     passedData = json.loads(request.data.decode("utf-8"))

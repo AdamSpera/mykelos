@@ -58,6 +58,7 @@ enablePortButton.addEventListener('click', function () { toggleButtonStyles(enab
 disablePortButton.addEventListener('click', function () { toggleButtonStyles(disablePortButton, enablePortButton); });
 portRSTPEnableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPEnableButton, portRSTPDisableButton); });
 portRSTPDisableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPDisableButton, portRSTPEnableButton); });
+
 portAccessButton.addEventListener('click', function () {
   toggleButtonStyles(portAccessButton, portTrunkButton);
   portVLAN1Display.innerText = 'VLAN';
@@ -83,6 +84,24 @@ function focusPort(port) {
   returnLink.style.display = 'block';
 
   // Get Port Settings
+  fetch('/getPortSetting', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value }) })
+  .then(response => response.text())
+  .then(text => {
+    // convert response to an array of json objects
+    var interfacesSettings = JSON.parse(text);
+    console.log(interfacesSettings);
+
+    // set switchPortDisplay to passed data
+    switchPortDisplay.innerText = `${hostname.innerText} / ${port}`;
+    // set portNameInput to passed data
+    portNameInput.value = interfacesSettings[(port - 1)].description;
+
+    // toggle enablePortButton and disablePortButton by the passed data
+    toggleButtonStyles(((interfacesSettings[(port - 1)].link_status == 'up') ? enablePortButton : disablePortButton), ((interfacesSettings[(port - 1)].link_status == 'up') ? disablePortButton : enablePortButton))
+
+
+
+  })
 
 }
 
@@ -143,8 +162,6 @@ function getDeviceInfo() {
       tableData.innerHTML = `<img src="" alt="">`;
       tableData.style.cssText = 'border: none !important; cursor: default;'
       portRow.appendChild(tableData);
-
-      console.log(text[5]);
 
       gigabitEthernetPorts = [];
       for (var i = 0; i < text[5].length; i++) {
