@@ -358,3 +358,13 @@ button {
   border-color: #1470cc;
   color: #fff;
 }
+.submitButton:hover {
+  background-color: #3a84ce;
+  border-color: #3a84ce;
+  color: #fff;
+}
+.submitButton:disabled {
+  background-color: #aacef2;
+  border-color: #aacef2;
+  color: #fff;
+}
