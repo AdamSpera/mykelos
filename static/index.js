@@ -23,9 +23,10 @@ var deviceInfo = {
 var numberRow = document.getElementById('numberRow');
 var portRow = document.getElementById('portRow');
 var clientTable = document.getElementById('clientTable');
+var subClientTable = document.getElementById('subClientTable');
 
 // Port Settings Fields
-var portSettingsTable = document.getElementById('portSettingsTable');
+var focusContent = document.getElementById('focusContent');
 
 var switchPortDisplay = document.getElementById('switchPortDisplay'); //Boyer-214-Podium / 1
 var portNameInput = document.getElementById('portNameInput'); // Device Name / Port#
@@ -41,11 +42,6 @@ var portVLAN1Input = document.getElementById('portVLAN1Input'); //input text
 var portVLAN2Display = document.getElementById('portVLAN2Display'); //[access: Voice VLAN, trunk: Allowed VLANs]
 var portVLAN2Input = document.getElementById('portVLAN2Input'); //input text
 
-var portRSTPEnableButton = document.getElementById('portRSTPEnableButton'); //enable button
-var portRSTPDisableButton = document.getElementById('portRSTPDisableButton'); //disable button
-
-var portSTPGuardSelect = document.getElementById('portSTPGuardSelect'); // BPDU Guard | Root Guard | Loop Guard | Disabled
-
 var loadingAnimation2 = document.getElementById('loadingAnimation2');
 
 var portSettingsUpdateButton = document.getElementById('portSettingsUpdateButton'); //update button
@@ -60,8 +56,6 @@ function toggleButtonStyles(clickedButton, otherButton) {
 
 enablePortButton.addEventListener('click', function () { toggleButtonStyles(enablePortButton, disablePortButton); });
 disablePortButton.addEventListener('click', function () { toggleButtonStyles(disablePortButton, enablePortButton); });
-portRSTPEnableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPEnableButton, portRSTPDisableButton); });
-portRSTPDisableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPDisableButton, portRSTPEnableButton); });
 
 function changeVLANText(mode) {
   if (mode == 'access') {
@@ -94,14 +88,14 @@ function focusPort(port) {
   mainView.style.display = 'none';
   focusView.style.display = 'block';
   returnLink.style.display = 'block';
-  portSettingsTable.style.display = 'none';
+  focusContent.style.display = 'none';
   loadingAnimation2.style.display = 'block';
 
   // Get Port Settings
-  fetch('/getPortSetting', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value }) })
+  fetch('/getPortSetting', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value, portNumber: port }) })
     .then(response => response.text())
     .then(text => {
-      portSettingsTable.style.display = 'block';
+      focusContent.style.display = 'block';
       loadingAnimation2.style.display = 'none';
 
       // convert response to an array of json objects

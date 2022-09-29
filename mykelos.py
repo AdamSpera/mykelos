@@ -36,10 +36,6 @@ def sendStatic():
     # Return the index.html file
     return render_template('index.html')
 
-
-
-
-
 @app.route('/getPortSetting', methods=['POST'])
 def getPortSetting():
     passedData = json.loads(request.data.decode("utf-8"))
@@ -71,15 +67,7 @@ def getPortSetting():
             }
         )
 
-    # return generalPortRaw
     return portSettings
-
-
-
-
-
-
-
 
 @app.route('/getClients', methods=['POST'])
 def getClients():

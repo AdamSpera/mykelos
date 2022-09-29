@@ -200,142 +200,107 @@
           </div>
         </div>
 
-        <!-- Port settings -->
-        <table id="portSettingsTable" class="portSettings">
-          <tbody>
-            <tr>
-              <th>
-                <span>Switch / Port</span>
-              </th>
-              <th>
-                <!-- text -->
-                <span id="switchPortDisplay">Device Name / Port #</span>
-              </th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <th>
-                <span style="margin-right: 115px; padding-right: 115px">Name</span>
-              </th>
-              <th>
-                <!-- input text -->
-                <input id="portNameInput" type="text">
-              </th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <th>
-                <span>Port Status</span>
-              </th>
-              <th>
-                <!-- toggle buttons -->
-                <table>
-                  <tbody>
-                    <tr>
-                      <button id="enablePortButton" style="width: 140px;"
-                        class="portSettingsButtonInactive leftButton">Enabled</button>
-                      <button id="disablePortButton" style="width: 140px;"
-                        class="portSettingsButtonInactive rightButton">Disabled</button>
-                    </tr>
-                  </tbody>
-                </table>
-              </th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <th>
-                <span>Port Type</span>
-              </th>
-              <th>
-                <!-- toggle buttons -->
-                <table>
-                  <tbody>
-                    <tr>
-                      <button id="portAccessButton" style="width: 120px;"
-                        class="portSettingsButtonInactive leftButton">Access</button>
-                      <button id="portTrunkButton" style="width: 120px;"
-                        class="portSettingsButtonInactive rightButton">Trunk</button>
-                    </tr>
-                  </tbody>
-                </table>
-              </th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <th>
-                <span id="portVLAN1display">VLAN || Native VLAN</span>
-              </th>
-              <th>
-                <!-- input text -->
-                <input id="portVLAN1Input" type="text">
-              </th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <th>
-                <span id="portVLAN2Display">Voice VLAN || Allowed VLANs</span>
-              </th>
-              <th>
-                <!-- input text -->
-                <input id="portVLAN2Input" type="text">
-              </th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <th>
-                <span>RSTP</span>
-              </th>
-              <th>
-                <!-- toggle buttons -->
-                <table>
-                  <tbody>
-                    <tr>
-                      <button id="portRSTPEnableButton" style="width: 140px;"
-                        class="portSettingsButtonInactive leftButton">Enabled</button>
-                      <button id="portRSTPDisableButton" style="width: 140px;"
-                        class="portSettingsButtonInactive rightButton">Disabled</button>
-                    </tr>
-                  </tbody>
-                </table>
-              </th>
-            </tr>
-            <tr>
-              <td></td>
-            </tr>
-            <tr>
-              <th>
-                <span>STP Guard</span>
-              </th>
-              <th>
-                <!-- drop down select -->
-                <select id="portSTPGuardSelect">
-                  <option value="BPDU Guard">BPDU Guard</option>
-                  <option value="Root Guard">Root Guard</option>
-                  <option value="Loop Guard">Loop Guard</option>
-                  <option value="Disabled">Disabled</option>
-                </select>
-              </th>
-            </tr>
-            <tr>
-              <th>
-                <!-- Update button -->
-                <button id="portSettingsUpdateButton" class="submitButton">Update</button>
-              </th>
-            </tr>
-          </tbody>
-        </table>
+        <div id="focusContent">
+          <!-- Port settings -->
+          <table id="portSettingsTable" class="portSettings">
+            <tbody>
+              <tr>
+                <th>
+                  <span>Switch / Port</span>
+                </th>
+                <th>
+                  <!-- text -->
+                  <span id="switchPortDisplay">Device Name / Port #</span>
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span style="margin-right: 115px; padding-right: 115px">Name</span>
+                </th>
+                <th>
+                  <!-- input text -->
+                  <input id="portNameInput" type="text">
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span>Port Status</span>
+                </th>
+                <th>
+                  <!-- toggle buttons -->
+                  <table>
+                    <tbody>
+                      <tr>
+                        <button id="enablePortButton" style="width: 140px;"
+                          class="portSettingsButtonInactive leftButton">Enabled</button>
+                        <button id="disablePortButton" style="width: 140px;"
+                          class="portSettingsButtonInactive rightButton">Disabled</button>
+                      </tr>
+                    </tbody>
+                  </table>
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span>Port Type</span>
+                </th>
+                <th>
+                  <!-- toggle buttons -->
+                  <table>
+                    <tbody>
+                      <tr>
+                        <button id="portAccessButton" style="width: 120px;"
+                          class="portSettingsButtonInactive leftButton">Access</button>
+                        <button id="portTrunkButton" style="width: 120px;"
+                          class="portSettingsButtonInactive rightButton">Trunk</button>
+                      </tr>
+                    </tbody>
+                  </table>
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span id="portVLAN1display">VLAN || Native VLAN</span>
+                </th>
+                <th>
+                  <!-- input text -->
+                  <input id="portVLAN1Input" type="text">
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span id="portVLAN2Display">Voice VLAN || Allowed VLANs</span>
+                </th>
+                <th>
+                  <!-- input text -->
+                  <input id="portVLAN2Input" type="text">
+                </th>
+              </tr>
+              <tr>
+                <th>
+                  <!-- Update button -->
+                  <button id="portSettingsUpdateButton" class="submitButton">Update</button>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
 
       </div>
 
