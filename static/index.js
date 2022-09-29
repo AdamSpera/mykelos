@@ -85,23 +85,37 @@ function focusPort(port) {
 
   // Get Port Settings
   fetch('/getPortSetting', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value }) })
-  .then(response => response.text())
-  .then(text => {
-    // convert response to an array of json objects
-    var interfacesSettings = JSON.parse(text);
-    console.log(interfacesSettings);
+    .then(response => response.text())
+    .then(text => {
+      // convert response to an array of json objects
+      var interfacesSettings = JSON.parse(text);
+      console.log(interfacesSettings);
 
-    // set switchPortDisplay to passed data
-    switchPortDisplay.innerText = `${hostname.innerText} / ${port}`;
-    // set portNameInput to passed data
-    portNameInput.value = interfacesSettings[(port - 1)].description;
+      // set switchPortDisplay to passed data
+      switchPortDisplay.innerText = `${hostname.innerText} / ${port}`;
+      // set portNameInput to passed data
+      portNameInput.value = interfacesSettings[0][(port - 1)].description;
 
-    // toggle enablePortButton and disablePortButton by the passed data
-    toggleButtonStyles(((interfacesSettings[(port - 1)].link_status == 'up') ? enablePortButton : disablePortButton), ((interfacesSettings[(port - 1)].link_status == 'up') ? disablePortButton : enablePortButton))
+      // toggle enablePortButton and disablePortButton by the passed data
+      toggleButtonStyles((((interfacesSettings[0][(port - 1)].protocol_status).includes('disa')) ? disablePortButton : enablePortButton), (((interfacesSettings[0][(port - 1)].protocol_status).includes('disa')) ? enablePortButton : disablePortButton))
 
+      // toggle portAccessButton and portTrunkButton by the passed data
+      toggleButtonStyles((((interfacesSettings[1][(port - 1)].admin_mode).includes('a')) ? portAccessButton : portTrunkButton), (((interfacesSettings[1][(port - 1)].admin_mode).includes('a')) ? portTrunkButton : portAccessButton))
 
+      // set portVLAN1Display and portVLAN2Display to passed data
+      if ((interfacesSettings[1][(port - 1)].admin_mode).includes('access')) {
+        portVLAN1Display.innerText = 'VLAN';
+        portVLAN2Display.innerText = 'Voice VLAN';
+        portVLAN1Input.value = interfacesSettings[1][(port - 1)].access_vlan;
+        portVLAN2Input.value = interfacesSettings[1][(port - 1)].voice_vlan;
+      } else {
+        portVLAN1Display.innerText = 'Native VLAN';
+        portVLAN2Display.innerText = 'Allowed VLANs';
+        portVLAN1Input.value = interfacesSettings[1][(port - 1)].native_vlan;
+        portVLAN2Input.value = interfacesSettings[1][(port - 1)].allowed_vlans;
+      }
 
-  })
+    })
 
 }
 

@@ -44,20 +44,34 @@ def sendStatic():
 def getPortSetting():
     passedData = json.loads(request.data.decode("utf-8"))
     # Return the show interfaces from device
-    portSettingsRaw = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show interfaces")
-    
-    portSettings = []
-    for port in portSettingsRaw:
+    generalPortRaw = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show interfaces")
+    switchportRaw = sendCommand(passedData['hostIP'], passedData['username'], passedData['generalPassword'], passedData['secretPassword'], "show interface switchport")
+
+    portSettings = [[], []]
+
+    for port in generalPortRaw:
         if 'lan' not in port['interface']:
-            portSettings.append(
+            portSettings[0].append(
                 {
-                    'interface': port['interface'],
-                    'description': port['description'],
-                    'link_status': port['link_status'],
-                    'media_type': port['media_type']
+                'interface': port['interface'],
+                'description': port['description'],
+                'protocol_status': port['protocol_status']
                 }
             )
 
+    for port in switchportRaw:
+        portSettings[1].append(
+            {
+                'interface': port['interface'],
+                'admin_mode': port['admin_mode'],
+                'access_vlan': port['access_vlan'],
+                'voice_vlan': port['voice_vlan'],
+                'native_vlan': port['native_vlan'],
+                'trunking_vlans': port['trunking_vlans'],
+            }
+        )
+
+    # return generalPortRaw
     return portSettings
 
 
