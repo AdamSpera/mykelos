@@ -25,6 +25,8 @@ var portRow = document.getElementById('portRow');
 var clientTable = document.getElementById('clientTable');
 
 // Port Settings Fields
+var portSettingsTable = document.getElementById('portSettingsTable');
+
 var switchPortDisplay = document.getElementById('switchPortDisplay'); //Boyer-214-Podium / 1
 var portNameInput = document.getElementById('portNameInput'); // Device Name / Port#
 
@@ -44,6 +46,8 @@ var portRSTPDisableButton = document.getElementById('portRSTPDisableButton'); //
 
 var portSTPGuardSelect = document.getElementById('portSTPGuardSelect'); // BPDU Guard | Root Guard | Loop Guard | Disabled
 
+var loadingAnimation2 = document.getElementById('loadingAnimation2');
+
 var portSettingsUpdateButton = document.getElementById('portSettingsUpdateButton'); //update button
 // End Settings Fields
 
@@ -59,15 +63,23 @@ disablePortButton.addEventListener('click', function () { toggleButtonStyles(dis
 portRSTPEnableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPEnableButton, portRSTPDisableButton); });
 portRSTPDisableButton.addEventListener('click', function () { toggleButtonStyles(portRSTPDisableButton, portRSTPEnableButton); });
 
+function changeVLANText(mode) {
+  if (mode == 'access') {
+    portVLAN1Display.innerText = 'VLAN';
+    portVLAN2Display.innerText = 'Voice VLAN';
+  } else if (mode == 'trunk') {
+    portVLAN1Display.innerText = 'Native VLAN';
+    portVLAN2Display.innerText = 'Allowed VLANs';
+  }
+}
+
 portAccessButton.addEventListener('click', function () {
   toggleButtonStyles(portAccessButton, portTrunkButton);
-  portVLAN1Display.innerText = 'VLAN';
-  portVLAN2Display.innerText = 'Voice VLAN';
+  changeVLANText('access');
 });
 portTrunkButton.addEventListener('click', function () {
   toggleButtonStyles(portTrunkButton, portAccessButton);
-  portVLAN1Display.innerText = 'Native VLAN';
-  portVLAN2Display.innerText = 'Allowed VLANs';
+  changeVLANText('trunk');
 });
 
 
@@ -82,11 +94,16 @@ function focusPort(port) {
   mainView.style.display = 'none';
   focusView.style.display = 'block';
   returnLink.style.display = 'block';
+  portSettingsTable.style.display = 'none';
+  loadingAnimation2.style.display = 'block';
 
   // Get Port Settings
   fetch('/getPortSetting', { method: 'POST', body: JSON.stringify({ hostIP: hostField.value, username: username.value, generalPassword: generalPassword.value, secretPassword: secretPassword.value }) })
     .then(response => response.text())
     .then(text => {
+      portSettingsTable.style.display = 'block';
+      loadingAnimation2.style.display = 'none';
+
       // convert response to an array of json objects
       var interfacesSettings = JSON.parse(text);
       console.log(interfacesSettings);
@@ -103,16 +120,18 @@ function focusPort(port) {
       toggleButtonStyles((((interfacesSettings[1][(port - 1)].admin_mode).includes('a')) ? portAccessButton : portTrunkButton), (((interfacesSettings[1][(port - 1)].admin_mode).includes('a')) ? portTrunkButton : portAccessButton))
 
       // set portVLAN1Display and portVLAN2Display to passed data
-      if ((interfacesSettings[1][(port - 1)].admin_mode).includes('access')) {
-        portVLAN1Display.innerText = 'VLAN';
-        portVLAN2Display.innerText = 'Voice VLAN';
+      if ((interfacesSettings[1][(port - 1)].admin_mode).includes('a')) {
+        changeVLANText('access')
         portVLAN1Input.value = interfacesSettings[1][(port - 1)].access_vlan;
         portVLAN2Input.value = interfacesSettings[1][(port - 1)].voice_vlan;
       } else {
-        portVLAN1Display.innerText = 'Native VLAN';
-        portVLAN2Display.innerText = 'Allowed VLANs';
+        changeVLANText('trunk')
         portVLAN1Input.value = interfacesSettings[1][(port - 1)].native_vlan;
-        portVLAN2Input.value = interfacesSettings[1][(port - 1)].allowed_vlans;
+        var allowedVLANs = '';
+        (interfacesSettings[1][(port - 1)].trunking_vlans).forEach(element => {
+          allowedVLANs += `${element}, `;
+        });
+        portVLAN2Input.value = allowedVLANs.slice(0, -2);
       }
 
     })

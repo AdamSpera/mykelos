@@ -194,8 +194,14 @@
       <!-- Focus port view -->
       <div id="focusView" style="display: none;" class="focusView">
 
+        <div id="loadingAnimation2" class="loader" style="display: none;">
+          <div class="scanner">
+            <p style="font-weight: 700; margin-top: 10px;">Loading...</p>
+          </div>
+        </div>
+
         <!-- Port settings -->
-        <table class="portSettings">
+        <table id="portSettingsTable" class="portSettings">
           <tbody>
             <tr>
               <th>
@@ -230,8 +236,10 @@
                 <table>
                   <tbody>
                     <tr>
-                      <button id="enablePortButton" style="width: 140px;" class="portSettingsButtonInactive leftButton">Enabled</button>
-                      <button id="disablePortButton" style="width: 140px;" class="portSettingsButtonInactive rightButton">Disabled</button>
+                      <button id="enablePortButton" style="width: 140px;"
+                        class="portSettingsButtonInactive leftButton">Enabled</button>
+                      <button id="disablePortButton" style="width: 140px;"
+                        class="portSettingsButtonInactive rightButton">Disabled</button>
                     </tr>
                   </tbody>
                 </table>
@@ -249,8 +257,10 @@
                 <table>
                   <tbody>
                     <tr>
-                      <button id="portAccessButton" style="width: 120px;" class="portSettingsButtonInactive leftButton">Access</button>
-                      <button id="portTrunkButton" style="width: 120px;" class="portSettingsButtonInactive rightButton">Trunk</button>
+                      <button id="portAccessButton" style="width: 120px;"
+                        class="portSettingsButtonInactive leftButton">Access</button>
+                      <button id="portTrunkButton" style="width: 120px;"
+                        class="portSettingsButtonInactive rightButton">Trunk</button>
                     </tr>
                   </tbody>
                 </table>
@@ -292,8 +302,10 @@
                 <table>
                   <tbody>
                     <tr>
-                      <button id="portRSTPEnableButton" style="width: 140px;" class="portSettingsButtonInactive leftButton">Enabled</button>
-                      <button id="portRSTPDisableButton" style="width: 140px;" class="portSettingsButtonInactive rightButton">Disabled</button>
+                      <button id="portRSTPEnableButton" style="width: 140px;"
+                        class="portSettingsButtonInactive leftButton">Enabled</button>
+                      <button id="portRSTPDisableButton" style="width: 140px;"
+                        class="portSettingsButtonInactive rightButton">Disabled</button>
                     </tr>
                   </tbody>
                 </table>
@@ -316,11 +328,14 @@
                 </select>
               </th>
             </tr>
+            <tr>
+              <th>
+                <!-- Update button -->
+                <button id="portSettingsUpdateButton" class="submitButton">Update</button>
+              </th>
+            </tr>
           </tbody>
         </table>
-
-        <!-- Submit button -->
-        <button id="portSettingsUpdateButton" class="submitButton">Update</button>
 
       </div>
 
