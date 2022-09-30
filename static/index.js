@@ -43,6 +43,10 @@ var portVLAN1Input = document.getElementById('portVLAN1Input'); //input text
 var portVLAN2Display = document.getElementById('portVLAN2Display'); //[access: Voice VLAN, trunk: Allowed VLANs]
 var portVLAN2Input = document.getElementById('portVLAN2Input'); //input text
 
+var portAddress = document.getElementById('portAddress'); // display port address
+var mediaType = document.getElementById('mediaType'); // display port settings
+var portSpeed = document.getElementById('portSpeed'); //display port speed
+
 var loadingAnimation2 = document.getElementById('loadingAnimation2');
 
 var portSettingsUpdateButton = document.getElementById('portSettingsUpdateButton'); //update button
@@ -241,6 +245,9 @@ function focusPort(port) {
     element.style.fontWeight = (element.innerText == port) ? '900' : '600';
   });
 
+  // console.log( globalSwitchData.show_interfaces[port - 1].interface)
+  portTitle.innerText = globalSwitchData.show_interfaces[port - 1].interface;
+
   // set switchPortDisplay to passed data
   switchPortDisplay.innerHTML = `${hostname.innerText} / ${port}`;
 
@@ -267,5 +274,16 @@ function focusPort(port) {
     });
     portVLAN2Input.value = allowedVLANs.slice(0, -2);
   }
+
+  // set portAddress from data
+  portAddress.innerText = globalSwitchData.show_interfaces[(port - 1)].address;
+
+  // set mediaType from data
+  mediaType.innerText = globalSwitchData.show_interfaces[(port - 1)].media_type;
+
+  // set portSpeed from data
+  portSpeed.innerText = globalSwitchData.show_interfaces[(port - 1)].speed;
+
+
 
 };
