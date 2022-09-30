@@ -351,3 +351,8 @@ secretPassword.value = urlParams.get('secretPassword');
 if (urlParams.get('host')) {
   authenticate.click();
 };
+
+
+document.getElementById('githubicon').addEventListener('click', function () {
+  location.href = 'https://github.com/AdamSpera/mykelos';
+});
