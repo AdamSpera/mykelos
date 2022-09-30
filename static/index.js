@@ -166,13 +166,11 @@ function displayClientList() {
 authenticate.addEventListener('click', function () {
   loadingAnimation.style.display = 'block';
 
-  // autofill for beta testing
-  if (username.value == '' || generalPassword.value == '' || secretPassword.value == '') {
-    hostField.value = '192.168.0.1';
-    username.value = 'cisco';
-    generalPassword.value = 'password';
-    secretPassword.value = 'password';
-  }
+  var url = new URL("http://127.0.0.1:5000/");
+  url.searchParams.append('host', hostField.value);
+  url.searchParams.append('username', username.value);
+  url.searchParams.append('generalPassword', generalPassword.value);
+  url.searchParams.append('secretpassword', secretPassword.value);
 
   // fetch /getSwitchData from Flask script
   fetch('/getSwitchData', { method: 'POST', body: JSON.stringify({ switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value }) })
@@ -310,5 +308,46 @@ function focusPort(port) {
     };
   });
 
+}; // focusPort(port)
 
+portSettingsUpdateButton.addEventListener('click', function () {
+  portSettingsUpdateButton.disabled = true;
+
+  var sendCommand = [
+    [
+      `interface ${portTitle.innerText}`,
+      `description ${portNameInput.value}`
+    ],
+    [
+      `interface ${portTitle.innerText}`,
+      `${(enablePortButton.classList.contains('portSettingsButtonActive')) ? 'no shutdown' : 'shutdown'}`
+    ],
+    [
+      `interface ${portTitle.innerText}`,
+      `switchport mode ${(portAccessButton.classList.contains('portSettingsButtonActive')) ? 'access' : 'trunk'}`,
+      `switchport ${(portAccessButton.classList.contains('portSettingsButtonActive')) ? 'access' : 'native'} vlan ${portVLAN1Input.value}`,
+      `switchport ${(portAccessButton.classList.contains('portSettingsButtonActive')) ? 'voice' : 'trunk'} vlan ${portVLAN2Input.value}`
+    ],
+  ];
+
+  // post /updatePort to Flask script
+  fetch('/updatePort', { method: 'POST', body: JSON.stringify({ switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value, command: sendCommand }) })
+    .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      location.href = 'http://127.0.0.1:5000?host=' + hostField.value + '&username=' + username.value + '&generalPassword=' + generalPassword.value + '&secretPassword=' + secretPassword.value;
+    });
+
+});
+
+
+// autofill for url params
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+hostField.value = urlParams.get('host');
+username.value = urlParams.get('username');
+generalPassword.value = urlParams.get('generalPassword');
+secretPassword.value = urlParams.get('secretPassword');
+if (urlParams.get('host')) {
+  authenticate.click();
 };

@@ -13,6 +13,38 @@ def sendStatic():
     # Return the index.html file
     return render_template('index.html')
 
+@app.route("/updatePort", methods=['POST'])
+def updatePort():
+    postData = json.loads(request.data.decode("utf-8"))
+
+    # Connect to device via SSH
+    cisco_881 = {
+        'device_type': 'cisco_ios',
+        'host':   postData['switchIP'],
+        'username': postData['switchUsername'],
+        'password': postData['switchGeneralPassword'],
+        "secret": postData['switchSecretPassword'],
+    }
+    del postData['switchIP']
+    del postData['switchUsername']
+    del postData['switchGeneralPassword']
+    del postData['switchSecretPassword']
+    # Initiate SSH connection
+    net_connect = ConnectHandler(**cisco_881)
+    # Enter enable mode
+    net_connect.enable()
+    # Enter configure terminal
+    net_connect.config_mode()
+    # Confirmation message
+    print(" # Connection established!")
+
+    # Send all compound commands sent
+    for compoundCommand in postData['command']:
+        net_connect.send_config_set(compoundCommand)
+
+    # Return the index.html file
+    return {'complete': True}
+
 @app.route('/getSwitchData', methods=['POST'])
 def getSwitchData():
     postData = json.loads(request.data.decode("utf-8"))
