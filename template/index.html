@@ -108,8 +108,8 @@
 
         <!-- Flex right box -->
         <div>
-          <!-- Device base info -->
-          <table class="infoTable">
+          <!-- Device info -->
+          <table id="deviceInfoTable" class="infoTable">
             <tr>
               <td>
                 <p id="ipAddress"><b>IP ADDRESS</b><br>Unknown</p>
@@ -128,13 +128,28 @@
               </td>
             </tr>
           </table>
+
+          <!-- Port info -->
+          <table id="portInfoTable" class="infoTable" style="display: none;">
+            <tr>
+              <td>
+                <p id="portAddress_Info"><b>PORT ADDRESS</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="mediaType_Info"><b>MEDIA TYPE</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="speed_info"><b>SPEED</b><br>Unknown</p>
+              </td>
+            </tr>
+          </table>
         </div>
 
         <!-- Left column div close -->
       </div>
 
       <!-- Divide line -->
-      <div class="divider">.</div>
+      <div class="divider" style="margin-top: -11px"><span>.</span></div>
 
       <!-- Main switch view -->
       <div id="mainView">
@@ -299,36 +314,6 @@
               </tr>
               <tr>
                 <td></td>
-              </tr>
-              <tr>
-                <th>
-                  <span>Port Address</span>
-                </th>
-                <th>
-                  <span id="portAddress">0000.000.0000</span>
-                </th>
-              </tr>
-              <tr>
-                <td></td>
-              </tr>
-              <tr>
-                <th>
-                  <span>Media Type</span>
-                </th>
-                <th>
-                  <span id="mediaType">0/0BaseTX</span>
-                </th>
-              </tr>
-              <tr>
-                <td></td>
-              </tr>
-              <tr>
-                <th>
-                  <span>Speed</span>
-                </th>
-                <th>
-                  <span id="portSpeed">0Mb/s</span>
-                </th>
               </tr>
               <tr>
                 <th>

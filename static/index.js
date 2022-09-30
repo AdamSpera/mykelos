@@ -12,12 +12,20 @@ var mainView = document.getElementById('mainView');
 var focusView = document.getElementById('focusView');
 var returnLink = document.getElementById('returnLink');
 
+var deviceInfoTable = document.getElementById('deviceInfoTable');
 var deviceInfo = {
   'ipAddress': document.getElementById('ipAddress'),
   'vlan': document.getElementById('vlan'),
   'gateway': document.getElementById('gateway'),
   'dns': document.getElementById('dns'),
   'firmware': document.getElementById('firmware')
+}
+
+var portInfoTable = document.getElementById('portInfoTable');
+var portInfo = {
+  'portAddress_Info': document.getElementById('portAddress_Info'),
+  'mediaType_Info': document.getElementById('mediaType_Info'),
+  'speed_info': document.getElementById('speed_info')
 }
 
 var numberRow = document.getElementById('numberRow');
@@ -43,10 +51,6 @@ var portVLAN1Input = document.getElementById('portVLAN1Input'); //input text
 var portVLAN2Display = document.getElementById('portVLAN2Display'); //[access: Voice VLAN, trunk: Allowed VLANs]
 var portVLAN2Input = document.getElementById('portVLAN2Input'); //input text
 
-var portAddress = document.getElementById('portAddress'); // display port address
-var mediaType = document.getElementById('mediaType'); // display port settings
-var portSpeed = document.getElementById('portSpeed'); //display port speed
-
 var loadingAnimation2 = document.getElementById('loadingAnimation2');
 
 var portSettingsUpdateButton = document.getElementById('portSettingsUpdateButton'); //update button
@@ -60,6 +64,8 @@ var globalSwitchData = {};
 
 // RETURN TO MAIN VIEW
 function returnMainView() {
+  deviceInfoTable.style.display = 'block';
+  portInfoTable.style.display = 'none';
   mainView.style.display = 'block';
   focusView.style.display = 'none';
   returnLink.style.display = 'none';
@@ -240,6 +246,9 @@ function focusPort(port) {
   returnLink.style.display = 'block';
   focusContent.style.display = 'block';
 
+  deviceInfoTable.style.display = 'none';
+  portInfoTable.style.display = 'block';
+
   // activate bold effect on port number
   document.getElementsByName("portDisplayNumber").forEach(element => {
     element.style.fontWeight = (element.innerText == port) ? '900' : '600';
@@ -276,14 +285,14 @@ function focusPort(port) {
   }
 
   // set portAddress from data
-  portAddress.innerText = globalSwitchData.show_interfaces[(port - 1)].address;
+  portInfo.portAddress_Info.innerHTML = `<b>PORT ADDRESS</b><br>${globalSwitchData.show_interfaces[(port - 1)].address}`
 
   // set mediaType from data
-  mediaType.innerText = globalSwitchData.show_interfaces[(port - 1)].media_type;
+  portInfo.mediaType_Info.innerHTML = `<b>MEDIA TYPE</b><br>${globalSwitchData.show_interfaces[(port - 1)].media_type}`
 
-  // set portSpeed from data
-  portSpeed.innerText = globalSwitchData.show_interfaces[(port - 1)].speed;
-
+  // set portSpeed from data and set border to none
+  portInfo.speed_info.innerHTML =`<b>SPEED</b><br>${globalSwitchData.show_interfaces[(port - 1)].speed}`
+  portInfo.speed_info.style.border = 'none';
 
 
 };

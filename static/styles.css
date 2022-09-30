@@ -207,6 +207,7 @@ button {
 .infoTable p {
   border-right: 1px solid #E5E5E5;
   padding-top: 13px;
+  padding-bottom: 13px;
   padding-right: 15px;
 }
 
