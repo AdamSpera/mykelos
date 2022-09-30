@@ -63,7 +63,7 @@ function returnMainView() {
   document.getElementsByName("portDisplayNumber").forEach(element => {
     element.style.fontWeight = '600';
   });
-}
+}; // returnMainView()
 
 
 // DISPLAY DEVICE DEVICE INFO
@@ -73,7 +73,7 @@ function displayDeviceInfo() {
   deviceInfo.ipAddress.innerHTML = `<b>IP ADDRESS</b><br>${hostField.value}`
 
   // set display switch gateway
-  var gatewayText = globalSwitchData.show_running_config.split('ip domain-name ')[1].split('!')[0]
+  var gatewayText = globalSwitchData.show_running_config.split('ip default-gateway ')[1].split(' ')[0]
   deviceInfo.gateway.innerHTML = `<b>GATEWAY</b><br>${gatewayText.slice(0, -2)}`
 
   // set display switch vlan
@@ -92,7 +92,7 @@ function displayDeviceInfo() {
   var firmwareText = globalSwitchData.show_running_config.split('version ')[1].split('no')[0];
   deviceInfo.firmware.innerHTML = `<b>FIRMWARE</b><br>Version ${firmwareText}`
 
-};
+}; // displayDeviceInfo()
 
 
 // DISPLAY SWITCH GUI PORTS
@@ -134,7 +134,7 @@ function displaySwitchGUI() {
     }
   });
 
-};
+}; // displaySwitchGUI()
 
 
 // DISPLAY TOTAL CLIENT LIST
@@ -212,7 +212,7 @@ function changeVLANText(mode) {
     portVLAN1Display.innerText = 'Native VLAN';
     portVLAN2Display.innerText = 'Allowed VLANs';
   }
-}
+} // changeVLANText(mode)
 
 
 // TOGGLE BUTTON FOR ACCESS VS TRUNK
@@ -220,6 +220,7 @@ portAccessButton.addEventListener('click', function () {
   toggleButtonStyles(portAccessButton, portTrunkButton);
   changeVLANText('access');
 });
+// TOGGLE BUTTON FOR ACCESS VS TRUNK
 portTrunkButton.addEventListener('click', function () {
   toggleButtonStyles(portTrunkButton, portAccessButton);
   changeVLANText('trunk');
@@ -246,10 +247,10 @@ function focusPort(port) {
   // set portNameInput to passed data
   portNameInput.value = globalSwitchData.show_interfaces[port - 1].description
 
-  // set enabled or disabled button style
+  // set enabled or disabled button style from data
   toggleButtonStyles((((globalSwitchData.show_interfaces[(port - 1)].protocol_status).includes('disa')) ? disablePortButton : enablePortButton), (((globalSwitchData.show_interfaces[(port - 1)].protocol_status).includes('disa')) ? enablePortButton : disablePortButton))
 
-  // set access or trunk button style
+  // set access or trunk button style from data
   toggleButtonStyles((((globalSwitchData.show_interface_switchport[(port - 1)].admin_mode).includes('a')) ? portAccessButton : portTrunkButton), (((globalSwitchData.show_interface_switchport[(port - 1)].admin_mode).includes('a')) ? portTrunkButton : portAccessButton))
 
   // set portVLAN1Display and portVLAN2Display
