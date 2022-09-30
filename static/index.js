@@ -31,7 +31,7 @@ var portInfo = {
 var numberRow = document.getElementById('numberRow');
 var portRow = document.getElementById('portRow');
 var clientTable = document.getElementById('clientTable');
-var subClientTable = document.getElementById('subClientTable');
+var specificClientTable = document.getElementById('specificClientTable');
 
 var focusContent = document.getElementById('focusContent');
 
@@ -291,8 +291,24 @@ function focusPort(port) {
   portInfo.mediaType_Info.innerHTML = `<b>MEDIA TYPE</b><br>${globalSwitchData.show_interfaces[(port - 1)].media_type}`
 
   // set portSpeed from data and set border to none
-  portInfo.speed_info.innerHTML =`<b>SPEED</b><br>${globalSwitchData.show_interfaces[(port - 1)].speed}`
+  portInfo.speed_info.innerHTML = `<b>SPEED</b><br>${globalSwitchData.show_interfaces[(port - 1)].speed}`
   portInfo.speed_info.style.border = 'none';
+
+  // remove all but first row of sub client table
+  for (var i = 1; i < specificClientTable.rows.length;) {
+    specificClientTable.deleteRow(i);
+  }
+
+  // for every client in the client list
+  var counter = 1;
+  globalSwitchData.show_cdp_neighbors_detail.forEach(client => {
+    if (client.local_port == portTitle.innerText) {
+      var tableRow = document.createElement("tr");
+      tableRow.innerHTML = `<td><span>${counter}</span></td><td>${client.destination_host}</span></td><td><span>${client.management_ip}</span></td><td><span>${client.local_port}</span></td><td><span>${client.capabilities}</span></td><td><span>${client.platform}</span></td>`;
+      specificClientTable.appendChild(tableRow);
+      counter++;
+    };
+  });
 
 
 };
