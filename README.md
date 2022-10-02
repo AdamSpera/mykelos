@@ -1,6 +1,6 @@
 # Mykelos
 
-_Open-source localhost management web app for Cisco IOS systems.
+_Open-source localhost management web app for Cisco IOS systems._
 
 ## Introduction
 
