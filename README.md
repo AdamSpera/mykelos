@@ -58,6 +58,9 @@ export NET_TEXTFSM="C:\ **PATH TO MYKELOS** \mykelos\ntc-templates\ntc_templates
 
 1. Open the command line and enter the following in the Mykelos folder:
 ```
+mykelos-env\Scripts\activate
+```
+```
 pip install netmiko
 pip install ntc_templates
 pip install Flask
