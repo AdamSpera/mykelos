@@ -1,6 +1,6 @@
 # Mykelos
 
-_Localhost management web app for Cisco IOS systems._
+_Open-source localhost management web app for Cisco IOS systems.
 
 ## Introduction
 
@@ -20,9 +20,14 @@ Utilizing the functionality of NetMiko and ConnectHandler over SSH, Mykelos prov
 
 ### Running the program
 
-- To start Mykelos, run the **StartMykelos.bat** file
-
-### Using the web application
+- To start Mykelos, open the mykelos folder and open with terminal/command prompt.
+- Enter the python virtual enviorment with the following code:
+```
+mykelos-env\Scripts\activate
+flask --app mykelos run
+```
+Leave this terminal open whiel usign Mykelos to keep the localhost server active.
+### Navigating the web application
 
 1. Connect to ```http://127.0.0.1:5000/```
 2. Enter target switch details in the left fields
@@ -34,34 +39,22 @@ _Clicking the ```Update``` button will send all values coorisponding commands to
 
 ## Installation 
 
-### Easy Install (Recommended)
-
-If you already have Git, Pip, and Python installed you can use the **EasyInstall.bat** file! 
-
-~ **Download the ```EasyInstall.bat``` file at https://adamspera.dev/mykelos** ~
-
-Recommended: Unzip the folder to the desktop, and run it from there.
-
-The program folder will be saved to the user desktop or at the same directory the bat file is ran from. If the folder does not appear, run the file again. 
-
-### Manual Installation (Incomplete)
-
-#### Git and Cloning
+### Git and Cloning
 
 1. Clone Mykelos to your desired directory and folder.
    - The MSI installer for Git can be found at https://git-scm.com/download/win
-2. Clone NTC-Templates inside the scriptswitch directory folder.
+2. Clone NTC-Templates inside the mykelos directory folder.
    - Clone NTC-Templates from https://github.com/networktocode/ntc-templates.git 
    
-#### Git Bash Variables
+### Git Bash Variables
 
 1. Open a Git Bash terminal in the Mykelos directory and enter the following line of code:
 ```
-export NET_TEXTFSM="C:\……\scriptswitch\ntc-templates\ntc_templates\templates”
+export NET_TEXTFSM="C:\ **PATH TO MYKELOS** \mykelos\ntc-templates\ntc_templates\templates"
 ```
 2. Test that the command was successful by entering the following code: ```echo $NET_TEXTFSM```
   
-#### Downloading Libraries
+### Downloading Libraries
 
 1. Open the command line and enter the following in the Mykelos folder:
 ```
