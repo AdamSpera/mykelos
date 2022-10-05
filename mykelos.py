@@ -88,3 +88,32 @@ def getSwitchData():
 
     # Return all compiled data 
     return commandResults
+
+@app.route('/sendCustomCommand', methods=['POST'])
+def sendCustomCommand():
+    postData = json.loads(request.data.decode("utf-8"))
+
+    # Connect to device via SSH
+    cisco_881 = {
+        'device_type': postData['deviceType'],
+        'host':   postData['switchIP'],
+        'username': postData['switchUsername'],
+        'password': postData['switchGeneralPassword'],
+        "secret": postData['switchSecretPassword'],
+    }
+    # Initiate SSH connection
+    net_connect = ConnectHandler(**cisco_881)
+    # Enter enable mode
+    net_connect.enable()
+    # Confirmation message
+    print(" # Connection established!")
+    print(postData['customCommand'])
+    
+    customResponse = net_connect.send_command(postData['customCommand'], use_textfsm=True)
+
+    # Disconnect from device
+    net_connect.disconnect()
+
+    # Return all compiled data 
+    return {'response': customResponse}
+
