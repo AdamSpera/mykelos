@@ -54,7 +54,8 @@
       <input id="secretPassword" type="password" placeholder="" class="inputField">
 
       <p class="fieldLabel" style="letter-spacing: 2px;"> DEVICE TYPE</p>
-      <select name="device_types" id="deviceTypeSelect" class="inputField" style="padding-top: 2px; padding-bottom: 2px;">
+      <select name="device_types" id="deviceTypeSelect" class="inputField"
+        style="padding-top: 2px; padding-bottom: 2px;">
         <option disabled selected value></option>
         <option value="cisco_ios">Cisco IOS</option>
         <option value="hp_procurve">HP Procurve</option>
@@ -74,11 +75,36 @@
       </div>
 
       <!-- Custom command pallet -->
-      <div id="customCommandDiv" style="text-align: center; padding-right: 5px; display: none;">
-        <p class="fieldLabel" style="letter-spacing: 2px; margin-top: 25px;">CUSTOM COMMAND</p>
-        <input id="customCommandInput" type="text" class="typeahead inputField" style="padding-left: 5px" data-provide="typeahead">
-        <button id="customCommandSend" style="margin-top: 10px; font-size: 14px; border-radius: 5px">Send Command</button>
-        <p id="displayCustomText" class="fieldLabel" style="letter-spacing: 2px; margin-top: 5px;"></p>
+      <div style="padding-top: 16.5px">
+        <div id="ciscoCustomCommandDiv" style="padding-right: 5px; display: none;">
+          <p class="fieldLabel" style="letter-spacing: 2px; margin-top: 25px;">CUSTOM COMMAND</p>
+          <input id="ciscoCustomCommandInput" type="text" class="typeahead_C inputField" style="padding-left: 5px"
+            data-provide="typeahead">
+          <button id="ciscoCustomCommandSend" style="margin-top: 10px; font-size: 14px; border-radius: 5px">Send
+            Command</button>
+          <p id="ciscoCustomDisplayText" class="fieldLabel" style="letter-spacing: 1px; margin-top: 5px;"></p>
+        </div>
+        <div id="hpCustomCommandDiv" style="padding-right: 5px; display: none;">
+          <p class="fieldLabel" style="letter-spacing: 2px; margin-top: 25px;">CUSTOM COMMAND</p>
+          <input id="hpCustomCommandInput" type="text" class="typeahead_H inputField" style="padding-left: 5px"
+            data-provide="typeahead">
+          <button id="hpCustomCommandSend" style="margin-top: 10px; font-size: 14px; border-radius: 5px">Send
+            Command</button>
+          <p id="hpCustomDisplayText" class="fieldLabel" style="letter-spacing: 1px; margin-top: 5px;"></p>
+        </div>
+        <div id="arubaCustomCommandDiv" style="padding-right: 5px; display: none;">
+          <p class="fieldLabel" style="letter-spacing: 2px; margin-top: 25px;">CUSTOM COMMAND</p>
+          <input id="arubaCustomCommandInput" type="text" class="typeahead_A inputField" style="padding-left: 5px"
+            data-provide="typeahead">
+          <button id="arubaCustomCommandSend" style="margin-top: 10px; font-size: 14px; border-radius: 5px">Send
+            Command</button>
+          <p id="arubaCustomDisplayText" class="fieldLabel" style="letter-spacing: 1px; margin-top: 5px;"></p>
+        </div>
+        <div id="loadingAnimationCustom" class="loader" style="display: none;">
+          <div class="scanner">
+            <p style="font-weight: 700; margin-top: 10px;">Loading...</p>
+          </div>
+        </div>
       </div>
 
     </div>

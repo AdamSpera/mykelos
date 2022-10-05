@@ -107,7 +107,6 @@ def sendCustomCommand():
     net_connect.enable()
     # Confirmation message
     print(" # Connection established!")
-    print(postData['customCommand'])
     
     customResponse = net_connect.send_command(postData['customCommand'], use_textfsm=True)
 
