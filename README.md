@@ -4,7 +4,7 @@ _Open-source localhost management web app for Cisco, HP, and Aruba networking sy
 
 ## Introduction
 
-Mykelos is a locally hosted Flask web application, offering a Cisco Meraki like experience for smaller scale networks and network scirpting across Cisco, HP, and Aruba networkign systems.
+Mykelos is a locally hosted Flask web application, offering a Cisco Meraki like experience for smaller scale networks,provided across Cisco IOS, HP Procurve, and Aruba OS networking systems.
 
 - Connect to Cisco, HP, and Aruba switches securely using SSH
 - Switch user interface for ease of undertanding
@@ -12,9 +12,10 @@ Mykelos is a locally hosted Flask web application, offering a Cisco Meraki like 
 - Ease of use through the StartMykelos.bat file
 - View specific interface and port information
 - Edit interface details, information, and configs
+- Send custom scripting commands and receive repsonse
 - Can use Mykelos completly offline and locally
 
-Utilizing the functionality of NetMiko and ConnectHandler over SSH, Mykelos provides a comprehencive platform for network switch managment. Users can view, edit, and change switch details, port settings, and interface information, all from 127.0.0.1:5000.
+Utilizing the functionality of NetMiko and ConnectHandler over SSH, Mykelos provides a comprehencive platform for network switch managment. Users can view, edit, and change switch details, port settings, interface information, and even send custom scripts, all from 127.0.0.1:5000.
 
 ## Usage
 
