@@ -316,6 +316,7 @@ var hostField = document.getElementById('hostField');
 var username = document.getElementById('username');
 var generalPassword = document.getElementById('generalPassword');
 var secretPassword = document.getElementById('secretPassword');
+var deviceTypeSelect = document.getElementById('deviceTypeSelect');
 var authenticate = document.getElementById('authenticate');
 var connectionText = document.getElementById('connectionText');
 var loadingAnimation = document.getElementById('loadingAnimation');

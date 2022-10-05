@@ -41,12 +41,10 @@
       <!-- User -->
       <h3 id="user" style="padding-top: 15px; padding-bottom: 15px;">No User</h3>
 
-      <!-- MAKE DROP DOWN FOR DEVICE TYPE -->
-
-      <p class="fieldLabel" style="letter-spacing: 2px;">IP ADDRESS</p>
+      <p class="fieldLabel" style="letter-spacing: 2px;"> IP ADDRESS</p>
       <input id="hostField" type="text" placeholder="" class="inputField">
 
-      <p class="fieldLabel" style="letter-spacing: 2px;">USERNAME</p>
+      <p class="fieldLabel" style="letter-spacing: 2px;"> USERNAME</p>
       <input id="username" type="text" placeholder="" class="inputField">
 
       <p class="fieldLabel" style="letter-spacing: 2px;"> GENERAL PASSWORD </p>
@@ -54,6 +52,15 @@
 
       <p class="fieldLabel" style="letter-spacing: 2px;"> SECRET PASSWORD</p>
       <input id="secretPassword" type="password" placeholder="" class="inputField">
+
+      <p class="fieldLabel" style="letter-spacing: 2px;"> DEVICE TYPE</p>
+      <select name="device_types" id="deviceTypeSelect" class="inputField" style="padding-top: 2px; padding-bottom: 2px;">
+        <option disabled selected value></option>
+        <option value="cisco_ios">Cisco IOS</option>
+        <option value="hp_procurve">HP Procurve</option>
+        <option value="aruba_os">Aruba OS</option>
+      </select>
+
       <br>
       <button id="authenticate" style="margin-top: 15px;">Authenticate</button>
       <br>
