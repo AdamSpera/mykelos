@@ -300,6 +300,12 @@ function displayClientList() {
     clientTable.appendChild(tableRow);
     counter++;
   });
+  globalSwitchData.show_ip_arp.forEach(client => {
+    var tableRow = document.createElement("tr");
+    tableRow.innerHTML = `<td><span>${counter}</span></td><td>Unknown</span></td><td><span>${client.address}</span></td><td><span>Unknown</span></td><td><span>Unknown</span></td><td><span>Unknown</span></td>`;
+    clientTable.appendChild(tableRow);
+    counter++;
+  });
 
 };
 
@@ -316,7 +322,7 @@ authenticate.addEventListener('click', function () {
   ciscoCustomCommandDiv.style.display = 'none';
   hpCustomCommandDiv.style.display = 'none';
   arubaCustomCommandDiv.style.display = 'none';
-  
+
   loadingAnimation.style.display = 'block';
 
   var url = new URL("http://127.0.0.1:5000/");
