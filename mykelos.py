@@ -10,11 +10,31 @@ app = Flask(__name__, template_folder='template', static_folder='static')
 
 @app.route("/")
 def sendStatic():
-    # Return the index.html file
-    return render_template('index.html')
 
-@app.route("/updatePort", methods=['POST'])
-def updatePort():
+    f = open("static/remember.txt", "r")
+    f = f.read()
+
+    # Return the index.html file
+    return render_template(f if f else 'index.html')
+    
+@app.route("/cisco")
+def sendCisco():
+    # Return the cisco.html file
+    return render_template('cisco.html')
+
+@app.route("/rememberChoice", methods=['POST'])
+def rememberChoice():
+    postData = json.loads(request.data.decode("utf-8"))
+
+    f = open("static/remember.txt", "w")
+    f.write(postData['userChoice'] + '.html')
+    f.close()
+
+    # Return the index.html file
+    return {'complete': True}
+
+@app.route("/updatePort_Cisco", methods=['POST'])
+def updatePort_Cisco():
     postData = json.loads(request.data.decode("utf-8"))
 
     # Connect to device via SSH
@@ -45,8 +65,8 @@ def updatePort():
     # Return the index.html file
     return {'complete': True}
 
-@app.route('/getSwitchData', methods=['POST'])
-def getSwitchData():
+@app.route('/getSwitchData_Cisco', methods=['POST'])
+def getSwitchData_Cisco():
     postData = json.loads(request.data.decode("utf-8"))
 
     # Connect to device via SSH
@@ -93,8 +113,8 @@ def getSwitchData():
     # Return all compiled data 
     return commandResults
 
-@app.route('/sendCustomCommand', methods=['POST'])
-def sendCustomCommand():
+@app.route('/sendCustomCommand_Cisco', methods=['POST'])
+def sendCustomCommand_Cisco():
     postData = json.loads(request.data.decode("utf-8"))
 
     # Connect to device via SSH
