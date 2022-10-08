@@ -33,6 +33,16 @@ def rememberChoice():
     # Return the index.html file
     return {'complete': True}
 
+@app.route("/removeRemember", methods=['GET'])
+def removeRemember():
+
+    f = open("static/remember.txt", "w")
+    f.write('')
+    f.close()
+
+    # Return the index.html file
+    return {'complete': True}
+
 @app.route("/updatePort_Cisco", methods=['POST'])
 def updatePort_Cisco():
     postData = json.loads(request.data.decode("utf-8"))
@@ -93,6 +103,32 @@ def getSwitchData_Cisco():
     show_vlan_brief = net_connect.send_command('show vlan brief', use_textfsm=True)
     show_cdp_neighbors_detail = net_connect.send_command('show cdp neighbors detail', use_textfsm=True)
     show_interface_switchport = net_connect.send_command('show interface switchport', use_textfsm=True)
+
+    # show_lldp_neighbors_detail = net_connect.send_command('show lldp neighbors detail', use_textfsm=True)
+    # show_lldp_neighbors = net_connect.send_command('show lldp neighbors', use_textfsm=True)
+
+    # commandResults = {
+    #     'show_running_config': show_running_config, 
+    #     'show_interfaces': show_interfaces, 
+    #     'show_ip_interface_brief': show_ip_interface_brief, 
+    #     'show_vlan_brief': show_vlan_brief, 
+    #     'show_interface_switchport': show_interface_switchport,
+    #     'show_cdp_neighbors_detail': show_cdp_neighbors_detail,
+    #     'show_lldp_neighbors_detail': show_lldp_neighbors_detail,
+    #     'show_lldp_neighbors': show_lldp_neighbors
+    # }
+
+    # enable lldp on switch 
+    net_connect.config_mode()
+    net_connect.send_command('lldp run')
+    # Disconnect from device
+    net_connect.disconnect()
+
+    # Initiate SSH connection
+    net_connect = ConnectHandler(**cisco_881)
+    # Enter enable mode
+    net_connect.enable()
+
     show_lldp_neighbors_detail = net_connect.send_command('show lldp neighbors detail', use_textfsm=True)
     show_lldp_neighbors = net_connect.send_command('show lldp neighbors', use_textfsm=True)
 
@@ -106,9 +142,6 @@ def getSwitchData_Cisco():
         'show_lldp_neighbors_detail': show_lldp_neighbors_detail,
         'show_lldp_neighbors': show_lldp_neighbors
     }
-
-    # Disconnect from device
-    net_connect.disconnect()
 
     # Return all compiled data 
     return commandResults

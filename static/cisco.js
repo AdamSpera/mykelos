@@ -220,11 +220,15 @@ function displayDeviceInfo() {
 
   // set display switch vlan
   deviceInfo.vlan.innerHTML = `<b>VLAN</b><br>No Default`
-  globalSwitchData.show_vlan_brief.forEach(element => {
-    if (element.name == 'default') {
-      deviceInfo.vlan.innerHTML = `<b>VLAN</b><br>${element.vlan_id}`
-    };
-  });
+  if (globalSwitchData.show_running_config.includes('lldp run')) {
+    deviceInfo.vlan.innerHTML = `<b>LLDP</b><br>Enabled`
+  } else {
+    globalSwitchData.show_vlan_brief.forEach(element => {
+      if (element.name == 'default') {
+        deviceInfo.vlan.innerHTML = `<b>VLAN</b><br>Default: ${element.vlan_id}`
+      };
+    });
+  }
 
   // set display switch dns
   var dnsText = globalSwitchData.show_running_config.split('ip domain-name ')[1].split('!')[0];
@@ -550,3 +554,12 @@ customCommandSend.addEventListener('click', function () {
       console.log(res)
     });
 });
+
+
+function removeRemember() {
+  fetch('/removeRemember', { method: 'GET' })
+    .then(res => res.json())
+    .then(res => {
+      location.href = '/';
+    });
+} 
