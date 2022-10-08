@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- <link rel="icon" href="assets/logo.png"> -->
+  <title>Mykelos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link type="text/css" href="/static/styles.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.2/bootstrap3-typeahead.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <!-- Top bar -->
+  <div class="topBar">
+    <h1 style="padding-top: 5px; letter-spacing: 2px; font-weight: 600;">
+      <div href="https://github.com/AdamSpera/mykelos" style="display: inline; cursor: pointer;"><svg
+          xmlns="http://www.w3.org/2000/svg" id="githubicon" width="25px" height="25px" style="margin-top: -5px"
+          fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+          <path
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
+        </svg></div>
+      &nbsp;Mykelos Local
+    </h1>
+  </div>
+
+  <!-- Whole page row -->
+  <div class="row" style="padding: 0; margin: 0;">
+
+    <!-- Left column -->
+    <div class="col-3 leftBar" style="padding-left: 20px;">
+
+      <!-- User -->
+      <h3 id="switchType" style="padding-top: 15px; padding-bottom: 15px;">Cisco IOS</h3>
+
+      <p class="fieldLabel" style="letter-spacing: 2px;"> IP ADDRESS</p>
+      <input id="hostField" type="text" placeholder="" class="inputField">
+
+      <p class="fieldLabel" style="letter-spacing: 2px;"> USERNAME</p>
+      <input id="username" type="text" placeholder="" class="inputField">
+
+      <p class="fieldLabel" style="letter-spacing: 2px;"> GENERAL PASSWORD </p>
+      <input id="generalPassword" type="password" placeholder="" class="inputField">
+
+      <p class="fieldLabel" style="letter-spacing: 2px;"> SECRET PASSWORD</p>
+      <input id="secretPassword" type="password" placeholder="" class="inputField">
+
+      <br>
+      <button id="authenticate" style="margin-top: 15px;">Authenticate</button>
+      <br>
+      <div id="connectionText" style="padding-top: 10px;">
+        <p>Connection Inactive</p>
+      </div>
+      <div id="loadingAnimation" class="loader" style="display: none;">
+        <div class="scanner">
+          <p style="font-weight: 700; margin-top: 10px;">Loading...</p>
+        </div>
+      </div>
+
+      <!-- Custom command pallet -->
+      <div style="padding-top: 16.5px">
+        <div id="customCommandDiv" style="padding-right: 5px; display: none;">
+          <p class="fieldLabel" style="letter-spacing: 2px; margin-top: 25px;">CUSTOM COMMAND</p>
+          <input id="customCommandInput" type="text" class="typeahead inputField" style="padding-left: 5px"
+            data-provide="typeahead">
+          <button id="customCommandSend" style="margin-top: 10px; font-size: 14px; border-radius: 5px">Send
+            Command</button>
+          <p id="customDisplayText" class="fieldLabel" style="letter-spacing: 1px; margin-top: 5px;"></p>
+        </div>
+      </div>
+      <div id="loadingAnimationCustom" class="loader" style="display: none;">
+        <div class="scanner">
+          <p style="font-weight: 700; margin-top: 10px;">Loading...</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right column -->
+    <div class="col-9 rightBar">
+      <table>
+        <tr>
+          <th>
+            <h2 id="hostname" style="padding-top: 15px; padding-bottom: 15px;">Device Hostname</h2>
+          </th>
+          <th>
+            <a href="#" onclick="returnMainView()" id="returnLink" style="display: none; padding-left: 20px;">Return to
+              port list</a>
+          </th>
+        </tr>
+      </table>
+
+      <div style="display: flex; flex-wrap: wrap;">
+
+        <!-- Flex left box -->
+        <div>
+          <!-- Switch graphic -->
+          <div class="switch-border">
+            <table class="port-table">
+              <tr id="numberRow" style="cursor: default; margin-right: 10px;">
+                <!-- <th><span>1</span></th>
+                <th><span>2</span></th>
+                <th><span>3</span></th>
+                <th><span>4</span></th>
+                <th><span>5</span></th>
+                <th><span>6</span></th>
+                <th><span>7</span></th>
+                <th><span>8</span></th>
+                <th><span>&nbsp;</span></th>
+                <th><span>9</span></th>
+                <th><span>10</span></th> -->
+              </tr>
+              <tr id="portRow">
+                <!-- <td><img id="port0" src="/static/assets/off-port.png" alt="port" onclick="focusPort(1)"></td>
+                <td><img id="port1" src="/static/assets/off-port.png" alt="port" onclick="focusPort(2)"></td>
+                <td><img id="port2" src="/static/assets/off-port.png" alt="port" onclick="focusPort(3)"></td>
+                <td><img id="port3" src="/static/assets/off-port.png" alt="port" onclick="focusPort(4)"></td>
+                <td><img id="port4" src="/static/assets/off-port.png" alt="port" onclick="focusPort(5)"></td>
+                <td><img id="port5" src="/static/assets/off-port.png" alt="port" onclick="focusPort(6)"></td>
+                <td><img id="port6" src="/static/assets/off-port.png" alt="port" onclick="focusPort(7)"></td>
+                <td><img id="port7" src="/static/assets/off-port.png" alt="port" onclick="focusPort(8)"></td>
+                <td style="border: none !important; cursor: default;"><img src="" alt=""></td>
+                <td><img id="port8" src="/static/assets/off-sfp.png" alt="port" onclick="focusPort(9)"></td>
+                <td><img id="port9" src="/static/assets/off-sfp.png" alt="port" onclick="focusPort(10)"></td> -->
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Flex right box -->
+        <div>
+          <!-- Device info -->
+          <table id="deviceInfoTable" class="infoTable">
+            <tr>
+              <td>
+                <p id="ipAddress"><b>IP ADDRESS</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="vlan"><b>VLAN</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="gateway"><b>GATEWAY</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="dns"><b>DNS</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="firmware" style="border-right: 1px solid white !important;"><b>FIRMWARE</b><br>Unknown</p>
+              </td>
+            </tr>
+          </table>
+
+          <!-- Port info -->
+          <table id="portInfoTable" class="infoTable" style="display: none;">
+            <tr>
+              <td>
+                <p id="portAddress_Info"><b>PORT ADDRESS</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="mediaType_Info"><b>MEDIA TYPE</b><br>Unknown</p>
+              </td>
+              <td>
+                <p id="speed_info"><b>SPEED</b><br>Unknown</p>
+              </td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Left column div close -->
+      </div>
+
+      <!-- Divide line -->
+      <div class="divider" style="margin-top: -11px"><span>.</span></div>
+
+      <!-- Main switch view -->
+      <div id="mainView">
+
+        <!-- Client List -->
+        <table class="clientTable">
+
+          <tbody id="clientTable">
+
+            <!-- Header Row -->
+            <tr>
+              <th>
+                <span>#</span>
+              </th>
+              <th>
+                <span>Description</span>
+              </th>
+              <th>
+                <span>IPv4 Address</span>
+              </th>
+              <th>
+                <span>Local Port</span>
+              </th>
+              <th>
+                <span>Capability</span>
+              </th>
+              <th>
+                <span>Platform</span>
+              </th>
+            </tr>
+
+            <!-- List all clients -->
+            <!-- <tr>
+              <td>
+                <span>1</span>
+              </td>
+              <td>
+                <span>ASXPS-Computer</span>
+              </td>
+              <td>
+                <span>560 KB</span>
+              </td>
+              <td>
+                <span>00:9c:02:01:cf:47</span>
+              </td>
+              <td>
+                <span>172.25.8.105</span>
+              </td>
+            </tr> -->
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+      <!-- Focus port view -->
+      <div id="focusView" style="display: none;" class="focusView">
+
+        <div id="loadingAnimation2" class="loader" style="display: none;">
+          <div class="scanner">
+            <p style="font-weight: 700; margin-top: 10px;">Loading...</p>
+          </div>
+        </div>
+
+        <div id="focusContent">
+          <!-- Port settings -->
+          <table id="portSettingsTable" class="portSettings">
+            <tbody>
+              <tr>
+                <th><span id="portTitle" class="portTitle">ExamplePort0/0</span></th>
+              </tr>
+              <tr>
+                <td><span></span></td>
+              </tr>
+              <tr>
+                <th>
+                  <span>Switch / Port</span>
+                </th>
+                <th>
+                  <!-- text -->
+                  <span id="switchPortDisplay">Device Name / Port #</span>
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span style="margin-right: 115px; padding-right: 115px">Name</span>
+                </th>
+                <th>
+                  <!-- input text -->
+                  <input id="portNameInput" type="text">
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span>Port Status</span>
+                </th>
+                <th>
+                  <!-- toggle buttons -->
+                  <table>
+                    <tbody>
+                      <tr>
+                        <button id="enablePortButton" style="width: 140px;"
+                          class="portSettingsButtonInactive leftButton">Enabled</button>
+                        <button id="disablePortButton" style="width: 140px;"
+                          class="portSettingsButtonInactive rightButton">Disabled</button>
+                      </tr>
+                    </tbody>
+                  </table>
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span>Port Type</span>
+                </th>
+                <th>
+                  <!-- toggle buttons -->
+                  <table>
+                    <tbody>
+                      <tr>
+                        <button id="portAccessButton" style="width: 120px;"
+                          class="portSettingsButtonInactive leftButton">Access</button>
+                        <button id="portTrunkButton" style="width: 120px;"
+                          class="portSettingsButtonInactive rightButton">Trunk</button>
+                      </tr>
+                    </tbody>
+                  </table>
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span id="portVLAN1display">VLAN || Native VLAN</span>
+                </th>
+                <th>
+                  <!-- input text -->
+                  <input id="portVLAN1Input" type="text">
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <span id="portVLAN2Display">Voice VLAN || Allowed VLANs</span>
+                </th>
+                <th>
+                  <!-- input text -->
+                  <input id="portVLAN2Input" type="text">
+                </th>
+              </tr>
+              <tr>
+                <td></td>
+              </tr>
+              <tr>
+                <th>
+                  <!-- Update button -->
+                  <button id="portSettingsUpdateButton" class="submitButton">Update</button>
+                </th>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Specific client List -->
+          <table class="clientTable" style="margin-left: 0px !important;">
+
+            <tbody id="specificClientTable">
+
+              <!-- Header Row -->
+              <tr>
+                <th>
+                  <span>#</span>
+                </th>
+                <th>
+                  <span>Description</span>
+                </th>
+                <th>
+                  <span>IPv4 Address</span>
+                </th>
+                <th>
+                  <span>Local Port</span>
+                </th>
+                <th>
+                  <span>Capability</span>
+                </th>
+                <th>
+                  <span>Platform</span>
+                </th>
+              </tr>
+
+              <!-- List all clients -->
+              <!-- <tr>
+                <td>
+                  <span>1</span>
+                </td>
+                <td>
+                  <span>ASXPS-Computer</span>
+                </td>
+                <td>
+                  <span>560 KB</span>
+                </td>
+                <td>
+                  <span>00:9c:02:01:cf:47</span>
+                </td>
+                <td>
+                  <span>172.25.8.105</span>
+                </td>
+              </tr> -->
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="/static/cisco.js"></script>
+</body>
+
+</html>
