@@ -97,7 +97,7 @@ def sendCustomCommand():
 
     # Connect to device via SSH
     cisco_881 = {
-        'device_type': postData['deviceType'],
+        'device_type': 'cisco_ios',
         'host':   postData['switchIP'],
         'username': postData['switchUsername'],
         'password': postData['switchGeneralPassword'],

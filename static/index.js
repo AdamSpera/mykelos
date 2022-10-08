@@ -130,23 +130,14 @@ var hostField = document.getElementById('hostField');
 var username = document.getElementById('username');
 var generalPassword = document.getElementById('generalPassword');
 var secretPassword = document.getElementById('secretPassword');
-var deviceTypeSelect = document.getElementById('deviceTypeSelect');
 var authenticate = document.getElementById('authenticate');
 var connectionText = document.getElementById('connectionText');
 var loadingAnimation = document.getElementById('loadingAnimation');
 
-var ciscoCustomCommandDiv = document.getElementById('ciscoCustomCommandDiv');
-var ciscoCustomCommandInput = document.getElementById('ciscoCustomCommandInput');
-var ciscoCustomCommandSend = document.getElementById('ciscoCustomCommandSend');
-var ciscoCustomDisplayText = document.getElementById('ciscoCustomDisplayText');
-var hpCustomCommandDiv = document.getElementById('hpCustomCommandDiv');
-var hpCustomCommandInput = document.getElementById('hpCustomCommandInput');
-var hpCustomCommandSend = document.getElementById('hpCustomCommandSend');
-var hpDisplayCustomText = document.getElementById('hpDisplayCustomText');
-var arubaCustomCommandDiv = document.getElementById('arubaCustomCommandDiv');
-var arubaCustomCommandInput = document.getElementById('arubaCustomCommandInput');
-var arubaCustomCommandSend = document.getElementById('arubaCustomCommandSend');
-var arubaDisplayCustomText = document.getElementById('arubaDisplayCustomText');
+var customCommandDiv = document.getElementById('customCommandDiv');
+var customCommandInput = document.getElementById('customCommandInput');
+var customCommandSend = document.getElementById('customCommandSend');
+var customDisplayText = document.getElementById('customDisplayText');
 
 var loadingAnimationCustom = document.getElementById('loadingAnimationCustom');
 
@@ -317,11 +308,8 @@ authenticate.addEventListener('click', function () {
   username.value = 'cisco'
   generalPassword.value = 'password'
   secretPassword.value = 'password'
-  // deviceTypeSelect.value = 'cisco_ios'
 
-  ciscoCustomCommandDiv.style.display = 'none';
-  hpCustomCommandDiv.style.display = 'none';
-  arubaCustomCommandDiv.style.display = 'none';
+  customCommandDiv.style.display = 'none';
 
   loadingAnimation.style.display = 'block';
 
@@ -354,21 +342,12 @@ authenticate.addEventListener('click', function () {
       displaySwitchGUI();
       displayClientList();
 
-      if (deviceTypeSelect.value == 'cisco_ios') {
-        ciscoCustomCommandDiv.style.display = 'block';
-      }
-      if (deviceTypeSelect.value == 'hp_procurve') {
-        hpCustomCommandDiv.style.display = 'block';
-      }
-      if (deviceTypeSelect.value == 'aruba_os') {
-        arubaCustomCommandDiv.style.display = 'block';
-      }
+      customCommandDiv.style.display = 'block';
 
       hostField.disabled = true;
       username.disabled = true;
       generalPassword.disabled = true;
       secretPassword.disabled = true;
-      deviceTypeSelect.disabled = true;
       authenticate.style.display = 'none';
       connectionText.style.marginTop = '-20px';
       connectionText.style.paddingTop = '-20px';
@@ -538,37 +517,9 @@ document.getElementById('githubicon').addEventListener('click', function () {
 
 
 // CISCO fill custom send
-var $input = $(".typeahead_C");
+var $input = $(".typeahead");
 $input.typeahead({
   source: listOfCommands.cisco,
-  autoSelect: true,
-});
-$input.change(function () {
-  var current = $input.typeahead("getActive");
-  matches = [];
-  if (current) {
-    if (current.name == $input.val()) {
-      matches.push(current.name);
-    }
-  }
-});
-var $input = $(".typeahead_H");
-$input.typeahead({
-  source: listOfCommands.hp,
-  autoSelect: true,
-});
-$input.change(function () {
-  var current = $input.typeahead("getActive");
-  matches = [];
-  if (current) {
-    if (current.name == $input.val()) {
-      matches.push(current.name);
-    }
-  }
-});
-var $input = $(".typeahead_A");
-$input.typeahead({
-  source: listOfCommands.aruba,
   autoSelect: true,
 });
 $input.change(function () {
@@ -583,33 +534,13 @@ $input.change(function () {
 
 
 // custom command send button click 
-ciscoCustomCommandSend.addEventListener('click', function () {
+customCommandSend.addEventListener('click', function () {
   loadingAnimationCustom.style.display = 'block';
-  fetch('/sendCustomCommand', { method: 'POST', body: JSON.stringify({ deviceType: deviceTypeSelect.value, switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value, customCommand: ciscoCustomCommandInput.value }) })
+  fetch('/sendCustomCommand', { method: 'POST', body: JSON.stringify({switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value, customCommand: customCommandInput.value}) })
     .then(res => res.json())
     .then(res => {
       loadingAnimationCustom.style.display = 'none';
-      ciscoCustomDisplayText.innerText = 'Response in console.';
-      console.log(res)
-    });
-});
-hpCustomCommandSend.addEventListener('click', function () {
-  loadingAnimationCustom.style.display = 'block';
-  fetch('/sendCustomCommand', { method: 'POST', body: JSON.stringify({ deviceType: deviceTypeSelect.value, switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value, customCommand: hpCustomCommandInput.value }) })
-    .then(res => res.json())
-    .then(res => {
-      loadingAnimationCustom.style.display = 'none';
-      hpDisplayCustomText.innerText = 'Response in console.';
-      console.log(res)
-    });
-});
-arubaCustomCommandSend.addEventListener('click', function () {
-  loadingAnimationCustom.style.display = 'block';
-  fetch('/sendCustomCommand', { method: 'POST', body: JSON.stringify({ deviceType: deviceTypeSelect.value, switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value, customCommand: arubaCustomCommandInput.value }) })
-    .then(res => res.json())
-    .then(res => {
-      loadingAnimationCustom.style.display = 'none';
-      arubaDisplayCustomText.innerText = 'Response in console.';
+      customDisplayText.innerText = 'Response in console.';
       console.log(res)
     });
 });
