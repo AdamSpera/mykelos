@@ -125,7 +125,7 @@ var listOfCommands = {
   ]
 }
 
-var user = document.getElementById('user');
+var switchType = document.getElementById('switchType');
 var hostField = document.getElementById('hostField');
 var username = document.getElementById('username');
 var generalPassword = document.getElementById('generalPassword');
@@ -291,12 +291,12 @@ function displayClientList() {
     clientTable.appendChild(tableRow);
     counter++;
   });
-  globalSwitchData.show_ip_arp.forEach(client => {
+  for (let i = 0; i < globalSwitchData.show_lldp_neighbors_detail.length; i++) {
     var tableRow = document.createElement("tr");
-    tableRow.innerHTML = `<td><span>${counter}</span></td><td>Unknown</span></td><td><span>${client.address}</span></td><td><span>Unknown</span></td><td><span>Unknown</span></td><td><span>Unknown</span></td>`;
+    tableRow.innerHTML = `<td><span>${counter}</span></td><td>${globalSwitchData.show_lldp_neighbors_detail[i].neighbor}</span></td><td><span>${globalSwitchData.show_lldp_neighbors_detail[i].management_ip}</span></td><td><span>${globalSwitchData.show_lldp_neighbors[i].local_interface}</span></td><td><span>${globalSwitchData.show_lldp_neighbors_detail[i].capabilities}</span></td><td><span>${globalSwitchData.show_lldp_neighbors_detail[i].system_description.split('revision ')[1].split(',')[0]}</span></td>`;
     clientTable.appendChild(tableRow);
     counter++;
-  });
+  }
 
 };
 
@@ -304,10 +304,12 @@ function displayClientList() {
 // ON AUTHENTICATION CLICK GET ALL DATA
 authenticate.addEventListener('click', function () {
 
-  hostField.value = '192.168.0.1'
-  username.value = 'cisco'
-  generalPassword.value = 'password'
-  secretPassword.value = 'password'
+  if (!hostField.value) {
+    hostField.value = '192.168.0.1'
+    username.value = 'cisco'
+    generalPassword.value = 'password'
+    secretPassword.value = 'password'
+  }
 
   customCommandDiv.style.display = 'none';
 
@@ -464,6 +466,14 @@ function focusPort(port) {
       counter++;
     };
   });
+  for (let i = 0; i < globalSwitchData.show_lldp_neighbors_detail.length; i++) {
+    if (switchPortDisplay.innerText.split('/ ')[1] == globalSwitchData.show_lldp_neighbors[i].local_interface.split('/')[1]) {
+      var tableRow = document.createElement("tr");
+      tableRow.innerHTML = `<td><span>${counter}</span></td><td>${globalSwitchData.show_lldp_neighbors_detail[i].neighbor}</span></td><td><span>${globalSwitchData.show_lldp_neighbors_detail[i].management_ip}</span></td><td><span>${globalSwitchData.show_lldp_neighbors[i].local_interface}</span></td><td><span>${globalSwitchData.show_lldp_neighbors_detail[i].capabilities}</span></td><td><span>${globalSwitchData.show_lldp_neighbors_detail[i].system_description.split('revision ')[1].split(',')[0]}</span></td>`;
+      specificClientTable.appendChild(tableRow);
+      counter++;
+    }
+  }
 
 }; // focusPort(port)
 
@@ -536,7 +546,7 @@ $input.change(function () {
 // custom command send button click 
 customCommandSend.addEventListener('click', function () {
   loadingAnimationCustom.style.display = 'block';
-  fetch('/sendCustomCommand', { method: 'POST', body: JSON.stringify({switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value, customCommand: customCommandInput.value}) })
+  fetch('/sendCustomCommand', { method: 'POST', body: JSON.stringify({ switchIP: hostField.value, switchUsername: username.value, switchGeneralPassword: generalPassword.value, switchSecretPassword: secretPassword.value, customCommand: customCommandInput.value }) })
     .then(res => res.json())
     .then(res => {
       loadingAnimationCustom.style.display = 'none';

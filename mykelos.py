@@ -73,16 +73,18 @@ def getSwitchData():
     show_vlan_brief = net_connect.send_command('show vlan brief', use_textfsm=True)
     show_cdp_neighbors_detail = net_connect.send_command('show cdp neighbors detail', use_textfsm=True)
     show_interface_switchport = net_connect.send_command('show interface switchport', use_textfsm=True)
-    show_ip_arp = net_connect.send_command('show ip arp', use_textfsm=True)
+    show_lldp_neighbors_detail = net_connect.send_command('show lldp neighbors detail', use_textfsm=True)
+    show_lldp_neighbors = net_connect.send_command('show lldp neighbors', use_textfsm=True)
 
     commandResults = {
         'show_running_config': show_running_config, 
         'show_interfaces': show_interfaces, 
         'show_ip_interface_brief': show_ip_interface_brief, 
         'show_vlan_brief': show_vlan_brief, 
-        'show_cdp_neighbors_detail': show_cdp_neighbors_detail,
         'show_interface_switchport': show_interface_switchport,
-        'show_ip_arp': show_ip_arp
+        'show_cdp_neighbors_detail': show_cdp_neighbors_detail,
+        'show_lldp_neighbors_detail': show_lldp_neighbors_detail,
+        'show_lldp_neighbors': show_lldp_neighbors
     }
 
     # Disconnect from device
